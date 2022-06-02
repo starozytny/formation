@@ -7,11 +7,13 @@ use App\Entity\Bill\BiHistory;
 use App\Entity\Bill\BiInvoice;
 use App\Entity\Bill\BiItem;
 use App\Entity\Bill\BiProduct;
+use App\Entity\Bill\BiSociety;
 use App\Entity\Bill\BiTaxe;
 use App\Entity\Bill\BiUnity;
 use App\Entity\Notification;
 use App\Entity\Society;
 use App\Entity\User;
+use App\Service\Data\Bill\DataBill;
 use App\Service\Data\Society\DataSociety;
 use App\Service\DatabaseService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,15 +30,17 @@ class AdminUsersCreateCommand extends Command
     private $em;
     private $databaseService;
     private $dataSociety;
+    private $dataBill;
 
     public function __construct(EntityManagerInterface $entityManager, DatabaseService $databaseService,
-                                DataSociety $dataSociety)
+                                DataSociety $dataSociety, DataBill $dataBill)
     {
         parent::__construct();
 
         $this->em = $entityManager;
         $this->databaseService = $databaseService;
         $this->dataSociety = $dataSociety;
+        $this->dataBill = $dataBill;
     }
 
     protected function configure()
@@ -95,12 +99,14 @@ class AdminUsersCreateCommand extends Command
         $io->title('Création de la société Logilink');
         $data = [
             "name" => "Logilink",
+            "code" => 0,
             "siren" => "",
             "siret" => "",
             "rcs" => "",
             "numeroTva" => "",
             "forme" => 1,
             "address" => "17 rue de la république",
+            "address2" => "",
             "zipcode" => "13002",
             "city" => "MARSEILLE 02",
             "complement" => "",
@@ -113,12 +119,20 @@ class AdminUsersCreateCommand extends Command
             "bankBic" => $fake->swiftBicNumber,
             "bankCode" => $fake->numberBetween(10,50),
             "bankIban" => $fake->iban,
+            "noteQuotation" => "",
+            "noteInvoice" => "",
+            "noteAvoir" => "",
+            "footerQuotation" => "",
+            "footerInvoice" => "",
+            "footerAvoir" => "",
         ];
         $data = json_decode(json_encode($data));
 
         $society = $this->dataSociety->setData(new Society(), $data, 0);
+        $biSociety = $this->dataBill->setDataSociety(new BiSociety(), $data);
 
         $this->em->persist($society);
+        $this->em->persist($biSociety);
         $io->text('SOCIETE : Logilink créé' );
 
         $io->title('Création des utilisateurs');
@@ -143,6 +157,7 @@ class AdminUsersCreateCommand extends Command
             for($i=0; $i<10 ; $i++) {
                 $data = [
                     "name" => $fake->name,
+                    "code" => $i,
                     "siren" => "",
                     "siret" => "",
                     "rcs" => "",
@@ -161,13 +176,21 @@ class AdminUsersCreateCommand extends Command
                     "bankBic" => $fake->swiftBicNumber,
                     "bankCode" => $fake->numberBetween(10,50),
                     "bankIban" => $fake->iban,
+                    "noteQuotation" => "",
+                    "noteInvoice" => "",
+                    "noteAvoir" => "",
+                    "footerQuotation" => "",
+                    "footerInvoice" => "",
+                    "footerAvoir" => "",
                 ];
 
                 $data = json_decode(json_encode($data));
 
                 $new = $this->dataSociety->setData(new Society(), $data, $i+1);
+                $new2 = $this->dataBill->setDataSociety(new BiSociety(), $data);
 
                 $this->em->persist($new);
+                $this->em->persist($new2);
                 $societies[] = $new;
             }
             $io->text('SOCIETE : Sociétés fake créées' );
