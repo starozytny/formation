@@ -40,6 +40,27 @@ function compareCity(a,b){
     return compareWithoutAccent(a.city, b.city);
 }
 
+function compareNumero(a, b){
+    return compareWithoutAccent(a.numero, b.numero);
+}
+
+function compareNumeroInverse(a, b){
+    return compareWithoutAccent(b.numero, a.numero);
+}
+
+function compareRateInverse(a, b){
+    return comparison(b.rate, a.rate);
+}
+
+function compareDateInverseThenNumeroInverse(a, b){
+    if (b.dateAt > a.dateAt) {
+        return 1;
+    } else if (b.dateAt < a.dateAt) {
+        return -1;
+    }
+    return comparison(b.numero, a.numero)
+}
+
 function compareWithoutAccent(aVal, bVal) {
     let aName = Sanitaze.removeAccents(aVal);
     let bName = Sanitaze.removeAccents(bVal);
@@ -76,6 +97,10 @@ module.exports = {
     compareEmail,
     compareZipcode,
     compareCity,
+    compareNumero,
+    compareNumeroInverse,
+    compareDateInverseThenNumeroInverse,
+    compareRateInverse,
     compareStart,
     compareStartInverse
 }

@@ -70,6 +70,8 @@ Encore
     .addEntry('dashboard_mails', './assets/dashboard/js/pages/mails.js')
     .addEntry('dashboard_paiements', './assets/dashboard/js/pages/paiements.js')
     .addEntry('dashboard_formations', './assets/dashboard/js/pages/formations.js')
+    .addEntry('dashboard_society', './assets/dashboard/js/pages/society.js')
+    .addEntry('dashboard_bill', './assets/dashboard/js/pages/bill.js')
 
     .addEntry('user_homepage', './assets/user/js/pages/homepage.js')
     .addEntry('user_profil', './assets/user/js/pages/profil.js')

@@ -230,6 +230,21 @@ function countProgress (number, total) {
     return progress;
 }
 
+function setBicFromIban(self, iban, arrayBic, name = "bic")
+{
+    if(iban.length >= 10 && arrayBic.length !== 0){
+        iban = iban.trim();
+        iban = iban.replaceAll(" ", "");
+        let ibanCode = iban.substring(4,9);
+        let v = arrayBic.filter(el => el.code === ibanCode)
+
+        if(v.length === 1){
+            self.setState({ [name]: v[0].bic.toUpperCase() })
+        }
+    }
+
+}
+
 module.exports = {
     getPostalCodes,
     setCityFromZipcode,
@@ -243,5 +258,7 @@ module.exports = {
     getBicCodes,
     setBicFromIban,
     toTop,
-    countProgress
+    countProgress,
+    getBicCodes,
+    setBicFromIban,
 }

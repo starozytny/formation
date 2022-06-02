@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import axios                   from "axios";
 import Routing                 from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
-import { Input, Checkbox }     from "@dashboardComponents/Tools/Fields";
+import { Input, Checkbox, SelectReactSelectize } from "@dashboardComponents/Tools/Fields";
 import { Alert }               from "@dashboardComponents/Tools/Alert";
 import { Button }              from "@dashboardComponents/Tools/Button";
 import { Drop }                from "@dashboardComponents/Tools/Drop";
@@ -18,7 +18,7 @@ const URL_UPDATE_GROUP       = "api_users_update";
 const TXT_CREATE_BUTTON_FORM = "Enregistrer";
 const TXT_UPDATE_BUTTON_FORM = "Enregistrer les modifications";
 
-export function UserFormulaire ({ type, onChangeContext, onUpdateList, element, isRegistration=false, roles=[] })
+export function UserFormulaire ({ type, onChangeContext, onUpdateList, element, societies, isRegistration=false, roles=[] })
 {
     let title = "Ajouter un utilisateur";
     let url = !isRegistration ? Routing.generate(URL_CREATE_ELEMENT) : Routing.generate(URL_CREATE_ELEMENT, {"n" : 1});
@@ -40,10 +40,12 @@ export function UserFormulaire ({ type, onChangeContext, onUpdateList, element, 
         email={element ? element.email : ""}
         avatar={element ? element.avatarFile : null}
         roles={element ? element.roles : []}
+        society={element ? element.society.id : ""}
         onUpdateList={onUpdateList}
         onChangeContext={onChangeContext}
         messageSuccess={msg}
         isRegistration={isRegistration}
+        societies={societies}
     />
 
     return !isRegistration ? <FormLayout onChangeContext={onChangeContext} form={form}>{title}</FormLayout> : <div className="form">{form}</div>;
@@ -60,6 +62,7 @@ export class Form extends Component {
             email: props.email,
             roles: props.roles,
             avatar: props.avatar,
+            society: props.society,
             password: '',
             passwordConfirm: '',
             errors: [],
@@ -91,11 +94,13 @@ export class Form extends Component {
         this.setState({[name]: value})
     }
 
+    handleChangeSelect = (name, e) => { this.setState({ [name]: e !== undefined ? e.value : "" }) }
+
     handleSubmit = (e) => {
         e.preventDefault();
 
         const { context, url, messageSuccess, isRegistration } = this.props;
-        const { username, firstname, lastname, password, passwordConfirm, email, roles } = this.state;
+        const { username, firstname, lastname, password, passwordConfirm, email, roles, society } = this.state;
 
         this.setState({ success: false})
 
@@ -112,6 +117,10 @@ export class Form extends Component {
                     ...[{type: "password", id: 'password', value: password, idCheck: 'passwordConfirm', valueCheck: passwordConfirm}]
                 ];
             }
+        }
+
+        if(context !== "profil"){
+            paramsToValidate = [...paramsToValidate, ...[{type: "text", id: 'society', value: society}]];
         }
 
         let inputAvatar = this.inputAvatar.current;
@@ -147,6 +156,7 @@ export class Form extends Component {
                             firstname: '',
                             lastname: '',
                             email: '',
+                            society: '',
                             roles: !isRegistration ? [] : ["ROLE_USER"],
                             password: '',
                             passwordConfirm: '',
@@ -164,13 +174,25 @@ export class Form extends Component {
     }
 
     render () {
-        const { context, isRegistration } = this.props;
-        const { errors, success, username, firstname, lastname, email, password, passwordConfirm, roles, avatar } = this.state;
+        const { context, societies, isProfil=false, isRegistration } = this.props;
+        const { errors, success, username, firstname, lastname, email, password, passwordConfirm, roles, avatar, society } = this.state;
 
         let rolesItems = [
-            { value: 'ROLE_ADMIN', label: 'Admin',          identifiant: 'admin' },
-            { value: 'ROLE_USER',  label: 'Utilisateur',    identifiant: 'utilisateur' },
+            { value: 'ROLE_ADMIN',      label: 'Admin',          identifiant: 'admin' },
+            { value: 'ROLE_USER',       label: 'Utilisateur',    identifiant: 'utilisateur' },
+            { value: 'ROLE_MANAGER',    label: 'Manager',        identifiant: 'manager' },
         ]
+
+        if(isProfil){
+            rolesItems.shift();
+        }
+
+        if(context !== "profil" && !isProfil){
+            let selectSociety = [];
+            societies.forEach(elem => {
+                selectSociety.push({ value: elem.id, label: "#" + elem.codeString + " - " + elem.name, identifiant: elem.name.toLowerCase() })
+            });
+        }
 
         return <>
             {!isRegistration && <p className="form-infos">
@@ -200,6 +222,15 @@ export class Form extends Component {
 
                     <Drop ref={this.inputAvatar} identifiant="avatar" previewFile={avatar} errors={errors} accept={"image/*"} maxFiles={1}
                           label="Téléverser un avatar" labelError="Seules les images sont acceptées.">Avatar (facultatif)</Drop>
+                </div>}
+
+                {context !== "profil" && !isProfil && <div className="line">
+                    <SelectReactSelectize items={selectSociety} identifiant="society" valeur={society}
+                                          placeholder={"Sélectionner la société"}
+                                          errors={errors} onChange={(e) => this.handleChangeSelect("society", e)}
+                    >
+                        Société
+                    </SelectReactSelectize>
                 </div>}
 
                 {(context === "create" || context === "profil") ? <>

@@ -1,0 +1,251 @@
+@page {
+    margin: 24px 24px 56px 24px;
+    footer: html_myFooter1;
+}
+
+body{
+    font-size: 11px;
+    color: #000000;
+}
+
+b{
+    font-weight: bold;
+}
+
+/**
+        HEADER
+ */
+
+.logo{
+    width: 110px;
+    height: 110px;
+}
+.header .col-1,
+.header .col-2,
+.header .col-3{
+    float: left;
+}
+
+.header .col-1{
+    width: 110px;
+    height: 110px;
+    padding-right: 12px;
+}
+
+.header .col-2{
+    width: 33%;
+}
+
+.header .col-3{
+    text-align: right;
+    width: calc(100% - 33% - 110px);
+}
+
+.numero-facture{
+    font-size: 18px;
+}
+
+/**
+    LETTER
+ */
+.letter{
+    margin-top: 12px;
+}
+
+.letter .from,
+.letter .to{
+    float: left;
+}
+
+.letter .from{
+    width: 32%;
+    padding-right: 12px;
+}
+
+.letter .to{
+    width: calc(68% - 12px);
+}
+
+.letter .to .concerne,
+.letter .to .destinataire{
+    float: left;
+}
+
+.letter .to .concerne{
+    width: 50%;
+    padding-right: 8px;
+}
+.letter .to .destinataire{
+    width: calc(50% - 8px);
+}
+
+/**
+    REFERENCES
+ */
+.references{
+    margin-top: 12px;
+}
+
+.references .ref-1,
+.references .ref-2{
+    float:left;
+    width: 50%
+}
+
+.references .ref-2{
+    text-align: right;
+}
+
+/**
+    PRODUCTS
+ */
+.products{
+    margin-top: 4px;
+    height: 450px;
+    min-height: 450px !important;
+    overflow: hidden;
+    border-bottom: 1px solid #939393;
+}
+
+.tvas .item-header,
+.products .item-header{
+    background: #ececec;
+    font-weight: bold;
+    border-bottom: 1px solid #939393;
+    font-size: 11px;
+}
+
+.tvas .item .col,
+.totaux .item .col,
+.products .item .col{
+    float: left;
+    height: 16px;
+    padding: 4px;
+    text-align: right;
+}
+
+.products .item-odd{
+    background-color: #f5f9ff;
+}
+
+.products .item-header .col{
+    text-align: center;
+    height: 33px;
+}
+
+.products .col-1{
+    width: 80px;
+    text-align: left;
+}
+.products .col-2{
+    width: 303px;
+    text-align: left;
+}
+
+.products .item-header .col-2,
+.products .col-4{
+    text-align: center;
+}
+
+.products .col-3,
+.products .col-4,
+.products .col-5{
+    width: 62px;
+}
+.products .col-5,
+.products .col-6 {
+    text-align: right;
+}
+
+.products .col-6{
+    width: 80px;
+}
+
+.products .col-7{
+    width: 40px;
+    text-align: center;
+}
+
+/**
+    RECAP
+ */
+
+.recap{
+    margin-top: 24px;
+}
+
+.recap .tvas-col,
+.recap .totaux-col{
+    float: left;
+    width: 50%;
+}
+
+.tvas,
+.totaux{
+    border-bottom: 1px solid #939393;
+}
+
+.tvas{
+    margin-bottom: 24px;
+}
+
+.tvas .item-header,
+.tvas{
+    width: 313px;
+}
+
+.tvas .item-header .col{
+    text-align: center;
+}
+
+.tvas .col-1{
+    width: 40px;
+    text-align: center;
+}
+
+.tvas .col-2,
+.tvas .col-4{
+    width: 90px;
+    text-align: right;
+}
+.tvas .col-3{
+    width: 60px;
+    text-align: center;
+}
+
+.totaux{
+    margin-left: 60px;
+    width: 312px;
+}
+.totaux .col-1,
+.totaux .col-2{
+    float: left;
+    width: 147px;
+}
+
+.totaux .col-1{
+    background: #ececec;
+    border-right: 1px solid #939393;
+    text-align: left;
+}
+/**
+    FOOTER and NOTE
+ */
+.bank{
+    margin-bottom: 4px;
+}
+.bank b{
+    color: #696969
+}
+.bank span{
+    color: #4d4d4d
+}
+
+.note{
+    font-size: 11px;
+}
+.footer{
+    text-align: center;
+    font-size: 10px;
+    margin-top: 24px;
+}

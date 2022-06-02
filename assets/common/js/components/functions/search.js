@@ -27,6 +27,10 @@ function switchFunction(type, search, v) {
                 return v;
             }
             break;
+        case "customer":
+        case "unity":
+        case "item":
+        case "society":
         case "changelog":
             if(searchStartWith(v.name.toLowerCase(), search)){
                 return v;
@@ -45,6 +49,18 @@ function switchFunction(type, search, v) {
             if(v.firstname.toLowerCase().startsWith(search)
                 || v.lastname.toLowerCase().startsWith(search)
             ){
+                return v;
+            }
+            break;
+        case "invoice":
+            let numero = Sanitaze.removeAccents(v.numero.toString().toLowerCase());
+            if(numero.includes(search)
+                || searchStartWith(v.toName.toLowerCase(), search)){
+                return v;
+            }
+            break;
+        case "taxe":
+            if(v.rate.toString().toLowerCase().includes(search)){
                 return v;
             }
             break;

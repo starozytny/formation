@@ -11,6 +11,7 @@ use App\Entity\Notification;
 use App\Entity\Paiement\PaLot;
 use App\Entity\Paiement\PaOrder;
 use App\Entity\Settings;
+use App\Entity\Society;
 use App\Entity\User;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Http\Discovery\Exception\NotFoundException;
@@ -103,7 +104,23 @@ class AdminController extends AbstractController
      */
     public function users(Request $request, SerializerInterface $serializer): Response
     {
-        return $this->getRenderView($request, $serializer, User::class, 'admin/pages/user/index.html.twig');
+        $route = 'admin/pages/user/index.html.twig';
+        $objs = $this->getAllData(User::class, $serializer);
+        $societies = $this->getAllData(Society::class, $serializer);
+
+        $search = $request->query->get('search');
+        if($search){
+            return $this->render($route, [
+                'donnees' => $objs,
+                'search' => $search,
+                'societies' => $societies
+            ]);
+        }
+
+        return $this->render($route, [
+            'donnees' => $objs,
+            'societies' => $societies
+        ]);
     }
 
     /**
@@ -240,6 +257,20 @@ class AdminController extends AbstractController
         return $this->render('admin/pages/formations/participants.html.twig', [
             'donnees' => $obj,
             'session' => $session
+        ]);
+    }
+
+    /**
+     * @Route("/societes", name="societies_index")
+     */
+    public function societies(SerializerInterface $serializer): Response
+    {
+        $objs = $this->getAllData(Society::class, $serializer);
+        $users= $this->getAllData(User::class, $serializer, Society::COUNT_READ);
+
+        return $this->render('admin/pages/society/index.html.twig', [
+            'donnees' => $objs,
+            'users' => $users
         ]);
     }
 }

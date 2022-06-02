@@ -1,0 +1,28 @@
+{% extends 'admin/pages/bill/template.html.twig' %}
+
+{% set page_title %}Liste des articles{% endset %}
+{% set submenuActive = "Articles" %}
+
+{% set page_text_infos %}
+    Les données articles permettent de gagner du temps dans la saisie de vos documents. <br>
+    Vous pouvez les modifier ou les supprimer sans qu'il y ait un impact sur les documents en cours ou terminés.
+{% endset %}
+
+{% block main_content %}
+    <div class="main-content">
+        <div class="default-page">
+            <div class="col-1">
+                <div class="default-page-content">
+                    <div id="items"
+                         data-donnees="{{ donnees }}"
+                         data-taxes="{{ taxes }}"
+                         data-unities="{{ unities }}"
+                         data-society-id="{{ society.id }}"
+                    >
+                        {% include "dashboard/layout/components/spinner.html.twig" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

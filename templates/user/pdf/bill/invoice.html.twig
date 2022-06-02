@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+{% set title_page = "Facture" %}
+
+{% include "user/pdf/bill/components/footer.html.twig" %}
+
+<div class="main">
+    <div class="header">
+        {% include "user/pdf/bill/components/header_left.html.twig" %}
+        <div class="col-3">
+            <div class="numero-facture"><b>Facture n°</b>{{ elem.status == 0 ? "Brouillon" : elem.numero }}</div>
+            <div><b>Date de facture : </b>{{ elem.dateAt | date('d/m/Y') }}</div>
+        </div>
+    </div>
+
+    <div class="letter">
+        <div class="from">
+            {% include "user/pdf/bill/components/expeditor.html.twig" %}
+        </div>
+        <div class="to">
+            <div class="concerne">
+                {% include "user/pdf/bill/components/concerne.html.twig" %}
+            </div>
+            <div class="destinataire">
+                {% include "user/pdf/bill/components/destinator.html.twig" %}
+
+            </div>
+        </div>
+    </div>
+
+    <div class="references">
+        <div class="ref-1">
+            {% if elem.refQuotation is defined %}
+                {{ (elem.refQuotation ? "Réf. Devis : " ~ elem.refQuotation : "") | spacevoid | raw }}
+            {% else %}
+                {{ "" | spacevoid | raw }}
+            {% endif %}
+        </div>
+        {% include "user/pdf/bill/components/reference2.html.twig" %}
+    </div>
+
+    <div class="products">
+        {% include "user/pdf/bill/components/product.html.twig" %}
+    </div>
+
+    <div class="recap">
+        <div class="tvas-col">
+            {% include "user/pdf/bill/components/tvas.html.twig" %}
+{#            <div class="note">#}
+{#                {% if elem.dueType != 1 %}#}
+{#                    Facture payable le {{ elem.dateAt | date('d/m/Y') }} pour la somme de {{ elem.totalTtc | price }} Euros.#}
+{#                {% else %}#}
+{#                    Facture acquittée le {{ elem.dateAt | date('d/m/Y') }} pour la somme de {{ elem.totalTtc | price }} Euros.#}
+{#                {% endif %}#}
+{#            </div>#}
+            <div class="note">
+                <div><b>Date d'échéance : </b>{{ elem.dueAt | date('d/m/Y') }}</div>
+                <div><b>Mode de règlement : </b>{{ elem.payTypeString }}</div>
+            </div>
+            <div class="note">
+                {{ elem.note | raw }}
+            </div>
+        </div>
+        <div class="totaux-col">
+            {% include "user/pdf/bill/components/totaux.html.twig" %}
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="bank">
+            {% if elem.displayBank %}
+                <div>
+                    <span><b>Renseignements bancaires : </b> <span>{{ elem.fromBankTitulaire }}</span></span>
+                </div>
+                <div>
+                    <span><b>IBAN : </b> <span>{{ elem.fromBankIban }} - </span></span>
+                    <span><b>BIC : </b> <span>{{ elem.fromBankBic }}</span></span>
+                </div>
+                <div>
+                    <span><b>Banque : </b> <span>{{ elem.fromBankName }} - </span></span>
+                    <span><b>N° du compte : </b> <span>{{ elem.fromBankNumero }} - </span></span>
+                    <span><b>Code banque : </b> <span>{{ elem.fromBankCode }}</span></span>
+                </div>
+            {% endif %}
+        </div>
+        <div>{{ elem.footer }}</div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+{% extends 'admin/pages/bill/template.html.twig' %}
+
+{% set page_title %}Créer une facture à partir du devis N°{{ elem.numero }}{% endset %}
+{% set submenuActive = "Factures" %}
+
+{% block main_content %}
+    <div class="main-content">
+        <div class="default-page">
+            <div class="col-1">
+                <div class="default-page-content">
+                    <div id="invoice-create" class="invoice-form"
+                         data-donnees="{{ donnees }}"
+                         data-society="{{ society }}"
+                         data-items="{{ items }}"
+                         data-products="{{ products }}"
+                         data-taxes="{{ taxes }}"
+                         data-unities="{{ unities }}"
+                         data-customers="{{ customers }}"
+                         data-sites="{{ sites }}"
+                         data-quotation-id="{{ elem.id }}"
+                         data-quotation-ref="{{ elem.numero }}"
+                    >
+                        {% include "dashboard/layout/components/spinner.html.twig" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

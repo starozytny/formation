@@ -683,6 +683,9 @@
             "./templates/base.html.twig"
         ]
     },
+    "symfony/uid": {
+        "version": "v5.4.3"
+    },
     "symfony/validator": {
         "version": "4.3",
         "recipe": {

@@ -1,0 +1,26 @@
+{% extends 'admin/pages/bill/template.html.twig' %}
+
+{% set page_title %}Ajouter un devis{% endset %}
+{% set submenuActive = "Devis" %}
+
+{% block main_content %}
+    <div class="main-content">
+        <div class="default-page">
+            <div class="col-1">
+                <div class="default-page-content">
+                    <div id="quotation-create" class="invoice-form"
+                         data-society="{{ society }}"
+                         data-items="{{ items }}"
+                         data-products="{{ products }}"
+                         data-taxes="{{ taxes }}"
+                         data-unities="{{ unities }}"
+                         data-customers="{{ customers }}"
+                         data-sites="{{ sites }}"
+                    >
+                        {% include "dashboard/layout/components/spinner.html.twig" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

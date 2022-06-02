@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Bill\BiInvoice;
 use App\Entity\Changelog;
 use App\Entity\Formation\FoRegistration;
 use App\Entity\Formation\FoSession;
@@ -9,7 +10,10 @@ use App\Entity\Formation\FoWorker;
 use App\Entity\Paiement\PaBank;
 use App\Entity\Paiement\PaOrder;
 use App\Entity\User;
+use App\Service\Bill\BillService;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Mpdf\MpdfException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -85,10 +89,10 @@ class UserController extends AbstractController
      */
     public function profilUpdate(SerializerInterface $serializer): Response
     {
-        /** @var User $data */
-        $data = $this->getUser();
-        $data = $serializer->serialize($data, 'json', ['groups' => User::ADMIN_READ]);
-        return $this->render('user/pages/profil/update.html.twig',  ['donnees' => $data]);
+        /** @var User $obj */
+        $obj = $this->getUser();
+        $data = $serializer->serialize($obj, 'json', ['groups' => User::ADMIN_READ]);
+        return $this->render('user/pages/profil/update.html.twig',  ['elem' => $obj, 'donnees' => $data]);
     }
 
     /**
@@ -250,5 +254,44 @@ class UserController extends AbstractController
             'donnees' => $sessions,
             'registrations' => $objs
         ]);
+    }
+
+    /**
+     * @Route("/utilisateur/ajouter", options={"expose"=true}, name="user_create")
+     *
+     * @Security("is_granted('ROLE_MANAGER')")
+     */
+    public function userCreate(): Response
+    {
+        /** @var User $obj */
+        $obj = $this->getUser();
+        return $this->render('user/pages/profil/user/create.html.twig', ['elem' => $obj]);
+    }
+
+    /**
+     * @Route("/utilisateur/modifier/{username}", options={"expose"=true}, name="user_update")
+     *
+     * @Security("is_granted('ROLE_MANAGER')")
+     */
+    public function userUpdate(User $obj, SerializerInterface $serializer): Response
+    {
+        $data = $serializer->serialize($obj, 'json', ['groups' => User::ADMIN_READ]);
+        return $this->render('user/pages/profil/user/update.html.twig', ['elem' => $obj, 'donnees' => $data]);
+    }
+
+    /**
+     * @Route("/facture/{id}", name="invoice")
+     * @throws MpdfException
+     */
+    public function invoice(BiInvoice $obj, BillService $billService): Response
+    {
+        $em = $this->doctrine->getManager();
+
+        if(!$this->isGranted('ROLE_ADMIN')){
+            $obj->setIsSeen(true);
+        }
+
+        $em->flush();
+        return $billService->getInvoice([$obj]);
     }
 }

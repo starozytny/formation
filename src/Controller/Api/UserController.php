@@ -142,6 +142,8 @@ class UserController extends AbstractController
     /**
      * Create a user
      *
+     * @Security("is_granted('ROLE_MANAGER')")
+     *
      * @Route("/", name="create", options={"expose"=true}, methods={"POST"})
      *
      * @OA\Response(
@@ -221,9 +223,9 @@ class UserController extends AbstractController
     }
 
     /**
-     * Admin - Delete an user
+     * Manager - Delete an user
      *
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_MANAGER')")
      *
      * @Route("/{id}", name="delete", options={"expose"=true}, methods={"DELETE"})
      *
