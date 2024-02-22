@@ -1,0 +1,10 @@
+{% extends 'manager/pages/news/template.html.twig' %}
+
+{% set page_title %}Actualités{% endset %}
+{% set page_subtitle %}Gestion des actualités.{% endset %}
+
+{% block main_content %}
+    <div id="news_list">
+        {% include "layout/components/loader.html.twig" %}
+    </div>
+{% endblock %}

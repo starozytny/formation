@@ -1,0 +1,15 @@
+{% extends 'manager/layout/layout.html.twig' %}
+
+{% set breadcrumbs = [
+    { icon: 'book-1', text: 'Actualités', url: path('manager_news_index')  }
+] %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('manager_news') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('manager_news') }}
+{% endblock %}
