@@ -41,6 +41,7 @@ function switchFunction(type, search, v) {
                 return v;
             }
             break;
+        case "news":
         case "contact":
         case "changelog":
             if(searchContainsWith(v.name, search)){

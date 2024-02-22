@@ -4,7 +4,13 @@
 {% set page_subtitle %}Gestion des actualités.{% endset %}
 
 {% block main_content %}
-    <div id="news_list">
+    <div class="page-actions">
+        <div class="col-1">
+            <a href="{{ path('manager_news_create') }}" class="btn btn-primary">Créer une actualité</a>
+        </div>
+    </div>
+
+    <div id="news_list" data-highlight="{{ highlight }}">
         {% include "layout/components/loader.html.twig" %}
     </div>
 {% endblock %}
