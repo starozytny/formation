@@ -1,0 +1,22 @@
+{% extends 'layout/layout_admin.html.twig' %}
+
+{% set page_prefix = "Manager" %}
+
+{% set menu = [
+    { name: "Dashboard",    icon: "home",
+        path: path('manager_homepage'), matchRoute: ['manager_homepage']
+    },
+] %}
+
+{% set menu_bottom = [
+    { name: "Espace utilisateur",  icon: "earth",
+        path: path('user_homepage'), matchRoute: ['user_homepage'] },
+    { name: "Espace administrateur",  icon: "earth",
+        path: path('admin_homepage'), matchRoute: ['admin_homepage'] },
+    { name: "Page accueil",  icon: "earth",
+        path: path('app_homepage'), matchRoute: ['app_homepage'] },
+] %}
+
+{% block footer %}
+    {% include "admin/layout/components/footer.html.twig" %}
+{% endblock %}
