@@ -23,6 +23,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     const CODE_ROLE_USER = 0;
     const CODE_ROLE_DEVELOPER = 1;
     const CODE_ROLE_ADMIN = 2;
+    const CODE_ROLE_MANAGER = 3;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -39,7 +40,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     private array $roles = [];
 
     /**
-     * @var string The hashed password
+     * @var ?string The hashed password
      */
     #[ORM\Column]
     private ?string $password = null;
@@ -147,8 +148,8 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     #[Groups(['user_list'])]
     public function getHighRole(): string
     {
-        $rolesSortedByImportance = ['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_USER'];
-        $rolesLabel = ['Développeur', 'Administrateur', 'Utilisateur'];
+        $rolesSortedByImportance = ['ROLE_DEVELOPER', 'ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER'];
+        $rolesLabel = ['Développeur', 'Administrateur', 'Manager', 'Utilisateur'];
         $i = 0;
         foreach ($rolesSortedByImportance as $role)
         {
@@ -165,6 +166,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
         return match ($this->getHighRole()) {
             'Développeur' => self::CODE_ROLE_DEVELOPER,
             'Administrateur' => self::CODE_ROLE_ADMIN,
+            'Manager' => self::CODE_ROLE_MANAGER,
             default => self::CODE_ROLE_USER,
         };
     }
