@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
-#[Route('/manager/formations', name: 'manager_formations_')]
+#[Route('/espace-manager/formations', name: 'manager_formations_')]
 class FormationController extends AbstractController
 {
     #[Route('/', name: 'index', options: ['expose' => true])]

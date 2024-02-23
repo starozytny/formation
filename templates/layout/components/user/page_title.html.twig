@@ -1,6 +1,11 @@
 <header class="bg-white shadow">
-    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{ page_title }}</h1>
-        <div class="page-subtitle">{{ page_subtitle is defined ? page_subtitle : "" }}</div>
+    <div class="flex flex-col justify-between gap-4 sm:flex-row mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div>
+            <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{ page_title }}</h1>
+            <div class="page-subtitle max-w-2xl">{{ page_subtitle is defined ? page_subtitle : "" }}</div>
+        </div>
+        <div>
+            {{ page_actions is defined ? page_actions : "" }}
+        </div>
     </div>
 </header>

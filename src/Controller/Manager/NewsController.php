@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
-#[Route('/manager/actualites', name: 'manager_news_')]
+#[Route('/espace-manager/actualites', name: 'manager_news_')]
 class NewsController extends AbstractController
 {
     #[Route('/', name: 'index', options: ['expose' => true])]

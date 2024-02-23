@@ -1,34 +1,7 @@
-.page-toolbar,
-.page-actions{
+.page-toolbar{
   padding: 0 1.2rem;
   margin-bottom: 1.2rem;
 }
-
-.page-actions{
-  @include flex(row, center, space-between, 8px);
-
-  & > .col-1{
-    @include flex(row, center, flex-start);
-  }
-  & > .col-2{
-    @include flex(row, center, flex-end);
-  }
-
-  & > .col-1,
-  & > .col-2{
-    gap: 8px;
-
-    .btn, .btn-icon{
-      display: inline-block;
-      width: auto;
-    }
-
-    .btn-icon{
-      padding: 10px 12px;
-    }
-  }
-}
-
 //                      __   _____ __    ___    __
 //                     | _| |___  / /_  ( _ )  |_ |
 //    _____ _____ _____| |     / / '_ \ / _ \   | |_____ _____ _____
@@ -48,8 +21,7 @@
 //                     | |  |_|\___/_____|  |_|    | |
 //                     |__|                       |__|
 @media (min-width:1024px) {
-  .page-toolbar,
-  .page-actions{
+  .page-toolbar{
     padding: 0 1.8rem;
     margin-bottom: 1.8rem;
   }

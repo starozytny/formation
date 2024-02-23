@@ -1,0 +1,32 @@
+{% extends 'user/pages/formations/template.html.twig' %}
+
+{% set page_title %}Formations{% endset %}
+{% set page_subtitle %}
+    100 % des formations sont en lien avec les activités LOI HOGUET,
+    elles sont proposées en fonction des actualités
+    juridiques et de la demande de nos adhérents.
+{% endset %}
+
+{% block main_content %}
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {% for elem in data %}
+            <a href="" class="bg-slate-50 rounded-md shadow basis-1/2 hover:bg-white">
+                <div class="flex flex-row justify-between px-4 py-2">
+                    <div>
+                        <div class="font-semibold text-sm">
+                            {{ elem.startAt | date('d/m/Y') }}
+                        </div>
+                        <div class="text-gray-400 text-sm">{{ elem.typeString }}</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="font-bold text-blue-600 text-lg">{{ elem.priceHt | price }} € HT</div>
+                        <div class="text-gray-400 text-sm">{{ elem.nbRemain }} / {{ elem.nbMax }} places</div>
+                    </div>
+                </div>
+                <div class="border-t px-4 py-2">
+                    <div>{{ elem.name }}</div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

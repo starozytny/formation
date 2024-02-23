@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
-#[Route('/manager/settings/taxes', name: 'manager_settings_taxs_')]
+#[Route('/espace-manager/settings/taxes', name: 'manager_settings_taxs_')]
 class TaxController extends AbstractController
 {
     #[Route('/taxe/ajouter', name: 'create', options: ['expose' => true])]

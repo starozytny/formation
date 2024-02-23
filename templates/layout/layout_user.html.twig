@@ -45,8 +45,9 @@
                             <div class="flex space-x-4">
                                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                                 {% for item in menu %}
-                                    <a href="{{ path(item.nameRoute) }}"
-                                       class="{{- app.request.get('_route') == item.nameRoute ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white" }} rounded-md px-3 py-2 text-sm font-medium" aria-current="page"
+                                    <a href="{{ item.path }}"
+                                       class="{{- app.request.get('_route') in item.matchRoute ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white" }} rounded-md px-3 py-2 text-sm font-medium"
+                                       aria-current="page"
                                     >
                                         <span>{{ item.name }}</span>
                                     </a>
@@ -103,8 +104,9 @@
                 <div class="space-y-1 px-2 pb-3 pt-2">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                     {% for item in menu %}
-                        <a href="{{ path(item.nameRoute) }}"
-                           class="{{- app.request.get('_route') == item.nameRoute ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white" }} block rounded-md px-3 py-2 text-sm font-medium" aria-current="page"
+                        <a href="{{ item.path }}"
+                           class="{{- app.request.get('_route') in item.matchRoute ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white" }} block rounded-md px-3 py-2 text-sm font-medium"
+                           aria-current="page"
                         >
                             <span>{{ item.name }}</span>
                         </a>
@@ -116,7 +118,7 @@
         <main>
             {% include "layout/components/user/page_title.html.twig" %}
 
-            <div>
+            <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
                 {% block main_content %}{% endblock %}
             </div>
 
