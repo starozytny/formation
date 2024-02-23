@@ -3,11 +3,14 @@
 {% set page_prefix = "Manager" %}
 
 {% set menu = [
-    { name: "Dashboard",    icon: "home",
+    { name: "Dashboard", icon: "home",
         path: path('manager_homepage'), matchRoute: ['manager_homepage']
     },
-    { name: "Actualités",    icon: "book-1",
-        path: path('manager_news_index'), matchRoute: ['manager_news_index']
+    { name: "Actualités", icon: "book-1",
+        path: path('manager_news_index'), matchRoute: ['manager_news_index', 'manager_news_create', 'manager_news_update']
+    },
+    { name: "Formations", icon: "book",
+        path: path('manager_formations_index'), matchRoute: ['manager_formations_index', 'manager_formations_create', 'manager_formations_update']
     },
 ] %}
 

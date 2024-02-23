@@ -1,0 +1,15 @@
+{% extends 'manager/layout/layout.html.twig' %}
+
+{% set breadcrumbs = [
+    { icon: 'book', text: 'Formations', url: path('manager_formations_index')  }
+] %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('manager_formation') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('manager_formation') }}
+{% endblock %}

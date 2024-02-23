@@ -1,0 +1,16 @@
+{% extends 'manager/pages/formations/template.html.twig' %}
+
+{% set page_title %}Formations{% endset %}
+{% set page_subtitle %}Gestion des formations.{% endset %}
+
+{% block main_content %}
+    <div class="page-actions">
+        <div class="col-1">
+            <a href="{{ path('manager_formations_create') }}" class="btn btn-primary">Créer une formation</a>
+        </div>
+    </div>
+
+    <div id="formations_list" data-highlight="{{ highlight }}">
+        {% include "layout/components/loader.html.twig" %}
+    </div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'manager/pages/formations/template.html.twig' %}
+
+{% set page_title %}Modifier {{ elem.name }} #{{ elem.id }}{% endset %}
+{% set page_subtitle %}Modifier les informations relatives à la formation : #{{ elem.id }}.{% endset %}
+
+{% block breadcrumb %}
+    {% set breadcrumbs = breadcrumbs | merge([{ text: page_title }]) %}
+    {{ parent() }}
+{% endblock %}
+
+{% block main_content %}
+    {% include "layout/components/admin/page_toolbar.html.twig" with { page_back: path('manager_formations_index', {'h': elem.id}) } %}
+
+    <div id="formations_update"
+         data-obj="{{ obj }}"
+    >
+        {% include "layout/components/loader.html.twig" %}
+    </div>
+{% endblock %}

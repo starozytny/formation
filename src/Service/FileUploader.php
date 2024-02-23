@@ -5,6 +5,8 @@ namespace App\Service;
 
 
 use App\Entity\Enum\Image\ImageType;
+use App\Entity\Formation\FoFormation;
+use App\Entity\Formation\FoNews;
 use App\Entity\Main\Agenda\AgEvent;
 use App\Entity\Main\Changelog;
 use App\Entity\Main\Image;
@@ -107,6 +109,8 @@ class FileUploader
             $folder = match ($type){
                 ImageType::Changelog => Changelog::FOLDER,
                 ImageType::AgEvent => AgEvent::FOLDER,
+                ImageType::FoNews => FoNews::FOLDER_CONTENT,
+                ImageType::FoFormation => FoFormation::FOLDER_CONTENT,
             };
 
             $fileName = $this->replaceFile($file, $folder);

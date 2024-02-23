@@ -141,7 +141,7 @@ class Form extends Component {
 						</div>
 						<div className="line-col-2">
 							<div className="line">
-								<TinyMCE type={99} identifiant='content' valeur={content.value}
+								<TinyMCE type={2} identifiant='content' valeur={content.value}
 										 errors={errors} onUpdateData={this.handleChangeTinyMCE}>
 									Contenu de l'actualité
 								</TinyMCE>

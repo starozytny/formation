@@ -12,6 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class FoNews extends DataEntity
 {
     const FOLDER = "fo_news";
+    const FOLDER_CONTENT = "fo_news_content";
 
     const LIST = ['news_list'];
     const FORM = ['news_form'];
