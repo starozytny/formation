@@ -1,5 +1,0 @@
-.avatar-letter{
-  @include flex(row, center, center);
-  background-color: var(--color3);
-  @include fontSemibold();
-}
