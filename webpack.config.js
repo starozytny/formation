@@ -51,6 +51,14 @@ Encore
         from: './assets/manager/images',
         to: 'manager/images/[path][name].[ext]',
     })
+    .copyFiles({
+        from: './assets/user/fonts',
+        to: 'user/fonts/[path][name].[ext]',
+    })
+    .copyFiles({
+        from: './assets/user/images',
+        to: 'user/images/[path][name].[ext]',
+    })
 
     .configureFilenames({
         css: !Encore.isProduction() ? 'css/[name].css' : 'css/[name].[hash:8].css',
@@ -89,6 +97,8 @@ Encore
     .addEntry('manager_formation','./assets/manager/js/pages/formation.js')
     .addEntry('manager_settings', './assets/manager/js/pages/settings.js')
 
+    .addEntry('user_app',      './assets/user/js/app.js')
+    .addEntry('user_homepage', './assets/user/js/pages/homepage.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
