@@ -91,6 +91,10 @@ function compareTaux(a, b){
     return comparison(a.taux, b.taux);
 }
 
+function compareStartAtInverse(a, b){
+    return comparison(b.startAt, a.startAt);
+}
+
 module.exports = {
     compareUsername,
     compareLastname,
@@ -106,4 +110,5 @@ module.exports = {
     compareRankThenLabel,
     compareLabel,
     compareTaux,
+    compareStartAtInverse,
 }

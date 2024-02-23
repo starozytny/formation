@@ -8,7 +8,7 @@ import { setHighlightClass, useHighlight } from "@commonHooks/item";
 
 import { ButtonIcon } from "@commonComponents/Elements/Button";
 
-const URL_UPDATE_PAGE = "manager_news_update";
+const URL_UPDATE_PAGE = "manager_formations_update";
 
 export function FormationsItem ({ elem, highlight, onDelete })
 {
@@ -21,29 +21,28 @@ export function FormationsItem ({ elem, highlight, onDelete })
     return <div className={`item${setHighlightClass(nHighlight)}`} ref={refItem}>
         <div className="item-content">
             <div className="item-infos">
-                <div className="col-1 col-with-image">
-                    <div className="image">
-                        {elem.fileFile
-                            ? <img src={elem.fileFile} alt="avatar" />
-                            : null
-                        }
-                    </div>
+                <div className="col-1">
                     <div className="infos">
                         <div className="name">
-                            <span>{elem.name}</span>
-                        </div>
-                        <div className="sub">
-                            {elem.updatedAt
-                                ? "Mod. " + Sanitaze.toFormatCalendar(elem.updatedAt)
-                                : Sanitaze.toFormatCalendar(elem.createdAt)
-                            }
+                            <div>
+                                {Sanitaze.toDateFormat(elem.startAt, 'L')}
+                            </div>
+                            <div>
+                                {elem.startAt !== elem.endAt ? " au " + Sanitaze.toDateFormat(elem.endAt, 'L') : null}
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className="col-2">
-                    <div class={`badge badge-news-${elem.visibility}`}>{elem.visibilityString}</div>
+                    <div>{elem.name}</div>
                 </div>
-                <div className="col-3 actions">
+                <div className="col-3">
+                    <div>{Sanitaze.toFormatCurrency(elem.priceHt)} HT</div>
+                </div>
+                <div className="col-4">
+                    <div className="sub">{elem.isOnline ? "En ligne" : "Hors ligne"}</div>
+                </div>
+                <div className="col-5 actions">
                     <ButtonIcon outline={true} icon="pencil" onClick={urlUpdate} element="a">Modifier</ButtonIcon>
                     <ButtonIcon outline={true} icon="trash" onClick={() => onDelete("delete", elem)}>Supprimer</ButtonIcon>
                 </div>

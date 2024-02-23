@@ -5,7 +5,7 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 import Sort from "@commonFunctions/sort";
 import List from "@commonFunctions/list";
 
-import { NewsList } from "@managerPages/News/NewsList";
+import { FormationsList } from "@managerPages/Formations/FormationsList";
 
 import { Search } from "@commonComponents/Elements/Search";
 import { Filter } from "@commonComponents/Elements/Filter";
@@ -13,11 +13,11 @@ import { ModalDelete } from "@commonComponents/Shortcut/Modal";
 import { LoaderElements } from "@commonComponents/Elements/Loader";
 import { Pagination, TopSorterPagination } from "@commonComponents/Elements/Pagination";
 
-const URL_GET_DATA        = "intern_api_fo_news_list";
-const URL_DELETE_ELEMENT  = "intern_api_fo_news_delete";
+const URL_GET_DATA        = "intern_api_fo_formations_list";
+const URL_DELETE_ELEMENT  = "intern_api_fo_formations_delete";
 
-const SESSION_PERPAGE = "project.perpage.fo.news";
-const SESSION_FILTERS = "project.filters.fo.news";
+const SESSION_PERPAGE = "project.perpage.fo.formations";
+const SESSION_FILTERS = "project.filters.fo.formations";
 
 export class Formations extends Component {
     constructor(props) {
@@ -31,7 +31,7 @@ export class Formations extends Component {
         this.state = {
             perPage: perPage,
             currentPage: 0,
-            sorter: Sort.compareCreatedAtInverse,
+            sorter: Sort.compareStartAtInverse,
             loadingData: true,
             filters: saveFilters !== null ? JSON.parse(saveFilters) : [],
             element: null,
@@ -52,12 +52,12 @@ export class Formations extends Component {
 
     handleSearch = (search) => {
         const { perPage, sorter, dataImmuable, filters } = this.state;
-        List.search(this, 'news', search, dataImmuable, perPage, sorter, true, filters, this.handleFilters)
+        List.search(this, 'formation', search, dataImmuable, perPage, sorter, true, filters, this.handleFilters)
     }
 
     handleFilters = (filters, nData = null) => {
         const { dataImmuable, perPage, sorter } = this.state;
-        return List.filter(this, 'visibility', nData ? nData : dataImmuable, filters, perPage, sorter, SESSION_FILTERS);
+        return List.filter(this, 'isOnline', nData ? nData : dataImmuable, filters, perPage, sorter, SESSION_FILTERS);
     }
 
     handleUpdateList = (element, context) => {
@@ -81,8 +81,8 @@ export class Formations extends Component {
         const { data, currentData, element, loadingData, perPage, currentPage, filters } = this.state;
 
         let filtersItems = [
-            {value: 0, id: "f-v-all",  label: "Tout le monde"},
-            {value: 1, id: "f-v-user", label: "Utilisateurs"},
+            {value: 0, id: "f-online",  label: "Hors ligne"},
+            {value: 1, id: "f-offline", label: "En ligne"},
         ]
 
         return <>
@@ -94,7 +94,7 @@ export class Formations extends Component {
                             <div className="filters">
                                 <Filter filters={filters} items={filtersItems} onFilters={this.handleFilters}/>
                             </div>
-                            <Search onSearch={this.handleSearch} placeholder="Rechercher par nom.."/>
+                            <Search onSearch={this.handleSearch} placeholder="Rechercher par intitulé.."/>
                         </div>
                     </div>
 
@@ -102,15 +102,15 @@ export class Formations extends Component {
                                          onClick={this.handlePaginationClick}
                                          onPerPage={this.handlePerPage} />
 
-                    <NewsList data={currentData} highlight={parseInt(highlight)} onDelete={this.handleModal} />
+                    <FormationsList data={currentData} highlight={parseInt(highlight)} onDelete={this.handleModal} />
 
                     <Pagination ref={this.pagination} items={data} taille={data.length} currentPage={currentPage}
                                 perPage={perPage} onUpdate={this.handleUpdateData} onChangeCurrentPage={this.handleChangeCurrentPage}/>
 
                     <ModalDelete refModal={this.delete} element={element} routeName={URL_DELETE_ELEMENT}
-                                 title="Supprimer cette actualité" msgSuccess="Actualité supprimée."
+                                 title="Supprimer cette formation" msgSuccess="Formation supprimée."
                                  onUpdateList={this.handleUpdateList} >
-                        Etes-vous sûr de vouloir supprimer définitivement cette actualité ?
+                        Etes-vous sûr de vouloir supprimer définitivement cette formation ?
                     </ModalDelete>
                 </>
             }

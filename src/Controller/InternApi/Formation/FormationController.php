@@ -4,7 +4,6 @@ namespace App\Controller\InternApi\Formation;
 
 use App\Entity\Formation\FoFormation;
 use App\Repository\Formation\FoFormationRepository;
-use App\Repository\Formation\FoNewsRepository;
 use App\Service\ApiResponse;
 use App\Service\Data\DataFormation;
 use App\Service\ValidatorService;
@@ -19,7 +18,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class FormationController extends AbstractController
 {
     #[Route('/list', name: 'list', options: ['expose' => true], methods: 'GET')]
-    public function list(FoNewsRepository $repository, ApiResponse $apiResponse): Response
+    public function list(FoFormationRepository $repository, ApiResponse $apiResponse): Response
     {
         return $apiResponse->apiJsonResponse($repository->findAll(), FoFormation::LIST);
     }
@@ -27,7 +26,7 @@ class FormationController extends AbstractController
     public function submitForm($type, FoFormationRepository $repository, FoFormation $obj, Request $request, ApiResponse $apiResponse,
                                ValidatorService $validator, DataFormation $dataEntity): JsonResponse
     {
-        $data = json_decode($request->get('data'));
+        $data = json_decode($request->getContent());
         if ($data === null) {
             return $apiResponse->apiJsonResponseBadRequest('Les données sont vides.');
         }

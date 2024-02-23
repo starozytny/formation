@@ -41,6 +41,7 @@ function switchFunction(type, search, v) {
                 return v;
             }
             break;
+        case "formation":
         case "news":
         case "contact":
         case "changelog":

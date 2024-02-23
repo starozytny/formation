@@ -144,7 +144,7 @@ class Form extends Component {
 			this.setState({ priceTtc: priceTtc })
 		}
 
-		if(name === "startTimeAm" || name === "endTimeAm" || name === "startTimeAP" || name === "endTimeAP"){
+		if(name === "startTimeAm" || name === "endTimeAm" || name === "startTimePm" || name === "endTimePm"){
 			value = Inputs.timeInput(e, this.state[name]);
 		}
 
@@ -179,11 +179,11 @@ class Form extends Component {
 
 		let paramsToValidate = [
 			{ type: "text", id: 'name', value: name },
-			{ type: "text", id: 'priceHt', value: priceHt },
-			{ type: "text", id: 'tva', value: tva },
 			{ type: "text", id: 'nbMin', value: nbMin },
 			{ type: "text", id: 'nbMax', value: nbMax },
 			{ type: "text", id: 'nbRemain', value: nbRemain },
+			{ type: "text", id: 'priceHt', value: priceHt },
+			{ type: "text", id: 'tva', value: tva },
 			{ type: "date", id: 'startAt', value: startAt },
 			{ type: "date", id: 'endAt', value: endAt },
 			{ type: "text", id: 'type', value: type },
@@ -257,12 +257,12 @@ class Form extends Component {
 						</div>
 						<div className="line-col-2">
 							<div className="line">
-								<Input identifiant="name" valeur={name} {...paramsInput0}>Intitulé</Input>
+								<Input identifiant="name" valeur={name} {...paramsInput0}>Intitulé *</Input>
 							</div>
 							<div className="line line-3">
-								<Input identifiant="nbMin" valeur={nbMin} {...paramsInput0}>Places min</Input>
-								<Input identifiant="nbMax" valeur={nbMax} {...paramsInput0}>Places max</Input>
-								<Input identifiant="nbRemain" valeur={nbRemain} {...paramsInput0}>Places restantes</Input>
+								<Input identifiant="nbMin" valeur={nbMin} {...paramsInput0}>Places min *</Input>
+								<Input identifiant="nbMax" valeur={nbMax} {...paramsInput0}>Places max *</Input>
+								<Input identifiant="nbRemain" valeur={nbRemain} {...paramsInput0}>Places restantes *</Input>
 							</div>
 							<div className="line">
 								<Input identifiant="address" valeur={address} {...paramsInput0}>Adresse</Input>
@@ -286,8 +286,8 @@ class Form extends Component {
 						</div>
 						<div className="line-col-2">
 							<div className="line line-2">
-								<Input type="js-date" identifiant="startAt" valeur={startAt} {...paramsInput0}>Début</Input>
-								<Input type="js-date" identifiant="endAt" valeur={endAt} {...paramsInput0}>Fin</Input>
+								<Input type="js-date" identifiant="startAt" valeur={startAt} {...paramsInput0}>Début *</Input>
+								<Input type="js-date" identifiant="endAt" valeur={endAt} {...paramsInput0}>Fin *</Input>
 							</div>
 							<div className="line line-4">
 								<Input placeholder="00h00" identifiant="startTimeAm" valeur={startTimeAm} {...paramsInput0}>Début horaire du matin</Input>
@@ -303,10 +303,8 @@ class Form extends Component {
 						</div>
 						<div className="line-col-2">
 							<div className="line line-3">
-								<Input identifiant="priceHt" valeur={priceHt} {...paramsInput0}>Prix HT</Input>
-								<Select items={taxItems} identifiant="tva" valeur={tva} {...paramsInput0}>
-									TVA
-								</Select>
+								<Input identifiant="priceHt" valeur={priceHt} {...paramsInput0}>Prix HT *</Input>
+								<Select items={taxItems} identifiant="tva" valeur={tva} {...paramsInput0}>TVA *</Select>
 								<InputView identifiant="priceTtc" valeur={priceTtc} {...paramsInput0}>Prix TTC</InputView>
 							</div>
 						</div>
@@ -318,12 +316,12 @@ class Form extends Component {
 						<div className="line-col-2">
 							<div className="line line-fat-box">
 								<Radiobox items={typeItems} identifiant="type" valeur={type} {...paramsInput0}>
-									Type de formation
+									Type de formation *
 								</Radiobox>
 							</div>
 							<div className="line">
 								<TinyMCE type={3} identifiant='content' valeur={content.value} {...paramsInput1}>
-									Contenu de la formation
+									Contenu de la formation *
 								</TinyMCE>
 							</div>
 							<div className="line">
