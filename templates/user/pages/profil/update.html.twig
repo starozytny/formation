@@ -1,0 +1,12 @@
+{% extends 'user/pages/profil/template.html.twig' %}
+
+{% set page_title %}Modifier mon compte{% endset %}
+{% set page_subtitle %}
+    Renseignez vos informations pour pouvoir vous inscrire à nos formations.
+{% endset %}
+
+{% block main_content %}
+    <div id="profil_update" data-obj="{{ obj }}">
+        {% include "layout/components/user/loaders/loader.html.twig" %}
+    </div>
+{% endblock %}

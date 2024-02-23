@@ -24,6 +24,8 @@ Encore
         '@appFolder': path.resolve(__dirname, './assets/app/js'),
         '@adminPages': path.resolve(__dirname, './assets/admin/js/pages/components'),
         '@managerPages': path.resolve(__dirname, './assets/manager/js/pages/components'),
+        '@userPages': path.resolve(__dirname, './assets/user/js/pages/components'),
+        '@userComponents': path.resolve(__dirname, './assets/user/js/components'),
         '@nodeModulesFolder': path.resolve(__dirname, './node_modules'),
     })
 
@@ -97,8 +99,8 @@ Encore
     .addEntry('manager_formation','./assets/manager/js/pages/formation.js')
     .addEntry('manager_settings', './assets/manager/js/pages/settings.js')
 
-    .addEntry('user_app',      './assets/user/js/app.js')
-    .addEntry('user_homepage', './assets/user/js/pages/homepage.js')
+    .addEntry('user_app',    './assets/user/js/app.js')
+    .addEntry('user_profil', './assets/user/js/pages/profil.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

@@ -19,6 +19,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
 
     const LIST = ['user_list'];
     const FORM = ['user_form'];
+    const PROFIL_FORM = ['user_profil_form'];
 
     const CODE_ROLE_USER = 0;
     const CODE_ROLE_DEVELOPER = 1;
@@ -28,7 +29,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['user_list', 'user_form'])]
+    #[Groups(['user_list', 'user_form', 'user_profil_form'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
@@ -46,15 +47,15 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user_list', 'user_form'])]
+    #[Groups(['user_list', 'user_form', 'user_profil_form'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user_list', 'user_form'])]
+    #[Groups(['user_list', 'user_form', 'user_profil_form'])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user_list', 'user_form'])]
+    #[Groups(['user_list', 'user_form', 'user_profil_form'])]
     private ?string $firstname = null;
 
     #[ORM\Column]

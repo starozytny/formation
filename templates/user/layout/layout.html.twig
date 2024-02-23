@@ -4,12 +4,12 @@
 
 {% set menu = [
     { name: "Dashboard", path: path('user_homepage'), matchRoute: ['user_homepage']},
-    { name: "Mon compte", path: path('user_profil_index'), matchRoute: ['user_profil_index']},
+    { name: "Mon compte", path: path('user_profil_index'), matchRoute: ['user_profil_index', 'user_profil_update']},
     { name: "Formations", path: path('user_formations_index'), matchRoute: ['user_formations_index', 'user_formations_read']},
 ] %}
 
 {% set menuProfil = [
-    { name: "Mon compte", path: path('user_profil_index'), matchRoute: ['user_profil_index']},
+    { name: "Mon compte", path: path('user_profil_index'), matchRoute: ['user_profil_index', 'user_profil_update']},
 ] %}
 
 {% if is_granted('ROLE_MANAGER') %}
