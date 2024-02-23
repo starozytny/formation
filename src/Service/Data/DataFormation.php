@@ -4,6 +4,7 @@ namespace App\Service\Data;
 
 use App\Entity\Formation\FoFormation;
 use App\Entity\Formation\FoNews;
+use App\Entity\Formation\FoTax;
 use App\Service\SanitizeData;
 
 class DataFormation
@@ -26,6 +27,15 @@ class DataFormation
         return ($obj)
             ->setName($this->sanitizeData->trimData($data->name))
             ->setContent($this->sanitizeData->trimData($data->content->html))
+        ;
+    }
+
+    public function setDataTax(FoTax $obj, $data): FoTax
+    {
+        return ($obj)
+            ->setCode((int) $data->code)
+            ->setTaux((float) $data->taux)
+            ->setNumeroCompta($this->sanitizeData->trimData($data->numeroCompta))
         ;
     }
 }

@@ -1,0 +1,22 @@
+@import "../vars/vars";
+
+@import "components/components";
+
+
+.items-taxs{
+  $col1: 180px; $col2: 180px; $col3: 180px; $col4: 100px; $colGap: 24px;
+  //                      __   _____ __    ___    __
+  //                     | _| |___  / /_  ( _ )  |_ |
+  //    _____ _____ _____| |     / / '_ \ / _ \   | |_____ _____ _____
+  //   |_____|_____|_____| |    / /| (_) | (_) |  | |_____|_____|_____|
+  //                     | |   /_/  \___/ \___/   | |
+  //                     |__|                    |__|
+  @media (min-width:768px) {
+    .item-infos{
+      & > .col-1{ width: $col1;}
+      & > .col-2{ width: $col2; }
+      & > .col-3{ width: $col3; }
+      & > .col-4.actions{ width: $col4; }
+    }
+  }
+}

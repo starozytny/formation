@@ -48,6 +48,12 @@ function switchFunction(type, search, v) {
                 return v;
             }
             break;
+        case "tax":
+            if(searchStartWith(v.code, search)
+                || searchStartWith(v.taux, search)){
+                return v;
+            }
+            break;
         default:
             break;
     }

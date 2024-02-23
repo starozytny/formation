@@ -1,0 +1,15 @@
+{% extends 'manager/layout/layout.html.twig' %}
+
+{% set breadcrumbs = [
+    { icon: 'settings', text: 'Paramètres', url: path('manager_settings_update')  }
+] %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('manager_settings') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('manager_settings') }}
+{% endblock %}

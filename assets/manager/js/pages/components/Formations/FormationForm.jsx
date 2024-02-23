@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import axios from "axios";
-import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import { Input, InputCity, InputView, Radiobox } from "@commonComponents/Elements/Fields";
 import { TinyMCE } from "@commonComponents/Elements/TinyMCE";

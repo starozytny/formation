@@ -1,0 +1,10 @@
+{% extends 'manager/pages/settings/template.html.twig' %}
+
+{% set page_title %}Modifier les paramètres{% endset %}
+{% set page_subtitle %}Modifier les informations globales du site.{% endset %}
+
+{% block main_content %}
+    <div id="settings_update" data-highlight="{{ highlight }}">
+        {% include "layout/components/loader.html.twig" %}
+    </div>
+{% endblock %}

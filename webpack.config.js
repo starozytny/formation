@@ -87,6 +87,7 @@ Encore
     .addEntry('manager_homepage', './assets/manager/js/pages/homepage.js')
     .addEntry('manager_news',     './assets/manager/js/pages/news.js')
     .addEntry('manager_formation','./assets/manager/js/pages/formation.js')
+    .addEntry('manager_settings', './assets/manager/js/pages/settings.js')
 
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)

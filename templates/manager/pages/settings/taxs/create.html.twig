@@ -1,0 +1,17 @@
+{% extends 'manager/pages/settings/template.html.twig' %}
+
+{% set page_title %}Création d'une taxe{% endset %}
+{% set page_subtitle %}Renseignez le maximum d'informations.{% endset %}
+
+{% block breadcrumb %}
+    {% set breadcrumbs = breadcrumbs | merge([{ text: page_title }]) %}
+    {{ parent() }}
+{% endblock %}
+
+{% block main_content %}
+    {% include "layout/components/admin/page_toolbar.html.twig" with { page_back: path('manager_settings_update') } %}
+
+    <div id="taxs_create">
+        {% include "layout/components/loader.html.twig" %}
+    </div>
+{% endblock %}
