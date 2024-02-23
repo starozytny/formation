@@ -168,6 +168,16 @@ function validateMinMax($value, $valueCheck) {
     return {'code': true};
 }
 
+function validateNotSup($value, $valueCheck) {
+    if(parseFloat($value) > parseFloat($valueCheck)){
+        return {
+            'code': false,
+            'message': 'La valeur doit être inférieur ou égale à la ' + $valueCheck + '.'
+        };
+    }
+    return {'code': true};
+}
+
 function switchCase(element){
     let validate;
     switch (element.type) {
@@ -203,6 +213,9 @@ function switchCase(element){
             break;
         case 'uniqueLength':
             validate = validateUniqueLength(element.value, element.size);
+            break;
+        case 'noSup':
+            validate = validateNotSup(element.value, element.valueCheck);
             break;
     }
 

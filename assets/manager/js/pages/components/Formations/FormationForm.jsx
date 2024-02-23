@@ -41,10 +41,10 @@ export function FormationFormulaire ({ context, element, taxs }) {
 		nbRemain={element ? Formulaire.setValue(element.nbRemain) : ""}
 		startAt={element ? Formulaire.setValueDate(element.startAt) : ""}
 		endAt={element ? Formulaire.setValueDate(element.endAt) : ""}
-		startTimeAm={element ? Formulaire.setValueDate(element.startTimeAm) : ""}
-		endTimeAm={element ? Formulaire.setValueDate(element.endTimeAm) : ""}
-		startTimePm={element ? Formulaire.setValueDate(element.startTimePm) : ""}
-		endTimePm={element ? Formulaire.setValueDate(element.endTimePm) : ""}
+		startTimeAm={element ? Formulaire.setValueTime(element.startTimeAm) : ""}
+		endTimeAm={element ? Formulaire.setValueTime(element.endTimeAm) : ""}
+		startTimePm={element ? Formulaire.setValueTime(element.startTimePm) : ""}
+		endTimePm={element ? Formulaire.setValueTime(element.endTimePm) : ""}
 		address={element ? Formulaire.setValue(element.address) : ""}
 		address2={element ? Formulaire.setValue(element.address2) : ""}
 		complement={element ? Formulaire.setValue(element.complement) : ""}
@@ -182,6 +182,8 @@ class Form extends Component {
 			{ type: "text", id: 'nbMin', value: nbMin },
 			{ type: "text", id: 'nbMax', value: nbMax },
 			{ type: "text", id: 'nbRemain', value: nbRemain },
+			{ type: "minMax", id: 'nbMin', value: nbMin, valueCheck: nbMax },
+			{ type: "noSup", id: 'nbRemain', value: nbRemain, valueCheck: nbMax },
 			{ type: "text", id: 'priceHt', value: priceHt },
 			{ type: "text", id: 'tva', value: tva },
 			{ type: "date", id: 'startAt', value: startAt },

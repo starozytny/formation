@@ -2,7 +2,7 @@
 
 namespace App\Controller\Manager;
 
-use App\Entity\Formation\FoNews;
+use App\Entity\Formation\FoFormation;
 use App\Entity\Formation\FoTax;
 use App\Repository\Formation\FoTaxRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,11 +32,11 @@ class FormationController extends AbstractController
     }
 
     #[Route('/formation/modifier/{id}', name: 'update', options: ['expose' => true])]
-    public function update(FoNews $elem, SerializerInterface $serializer, FoTaxRepository $taxRepository): Response
+    public function update(FoFormation $elem, SerializerInterface $serializer, FoTaxRepository $taxRepository): Response
     {
         $taxs = $taxRepository->findBy([], ['taux' => 'ASC']);
         $taxs = $serializer->serialize($taxs, 'json', ['groups' => FoTax::SELECT]);
-        $obj  = $serializer->serialize($elem, 'json', ['groups' => FoNews::FORM]);
+        $obj  = $serializer->serialize($elem, 'json', ['groups' => FoFormation::FORM]);
         return $this->render('manager/pages/formations/update.html.twig', [
             'elem' => $elem,
             'obj' => $obj,

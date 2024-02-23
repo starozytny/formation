@@ -58,19 +58,19 @@ class FoFormation
     private ?\DateTimeInterface $endAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['formation_list', 'formation_form'])]
+    #[Groups(['formation_form'])]
     private ?\DateTimeInterface $startTimeAm = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['formation_list', 'formation_form'])]
+    #[Groups(['formation_form'])]
     private ?\DateTimeInterface $endTimeAm = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['formation_list', 'formation_form'])]
+    #[Groups(['formation_form'])]
     private ?\DateTimeInterface $startTimePm = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['formation_list', 'formation_form'])]
+    #[Groups(['formation_form'])]
     private ?\DateTimeInterface $endTimePm = null;
 
     #[ORM\Column(length: 255, nullable: true)]

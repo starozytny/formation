@@ -38,6 +38,10 @@ export function FormationsItem ({ elem, highlight, onDelete })
                 </div>
                 <div className="col-3">
                     <div>{Sanitaze.toFormatCurrency(elem.priceHt)} HT</div>
+                    <div className="sub" style={{marginTop: "4px"}}>
+                        <div>{elem.nbRemain} / {elem.nbMax} places</div>
+                        <div>{elem.nbMin} places min</div>
+                    </div>
                 </div>
                 <div className="col-4">
                     <div className="sub">{elem.isOnline ? "En ligne" : "Hors ligne"}</div>
