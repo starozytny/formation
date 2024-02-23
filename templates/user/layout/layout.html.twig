@@ -4,8 +4,31 @@
 
 {% set menu = [
     { name: "Dashboard", path: path('user_homepage'), matchRoute: ['user_homepage']},
+    { name: "Mon compte", path: path('user_profil_index'), matchRoute: ['user_profil_index']},
     { name: "Formations", path: path('user_formations_index'), matchRoute: ['user_formations_index', 'user_formations_read']},
 ] %}
+
+{% set menuProfil = [
+    { name: "Mon compte", path: path('user_profil_index'), matchRoute: ['user_profil_index']},
+] %}
+
+{% if is_granted('ROLE_MANAGER') %}
+    {% set menuProfil = menuProfil | merge([
+        { isSeparator: true },
+        { name: "Espace manager", path: path('manager_homepage'), matchRoute: ['manager_homepage']}
+    ]) %}
+{% endif %}
+
+{% if is_granted('ROLE_ADMIN') %}
+    {% set menuProfil = menuProfil | merge([
+        { name: "Espace administrateur", path: path('admin_homepage'), matchRoute: ['admin_homepage']}
+    ]) %}
+{% endif %}
+
+{% set menuProfil = menuProfil | merge([
+    { isSeparator: true },
+    { name: "Se déconnecter", path: path('app_logout'), matchRoute: ['app_logout']}
+]) %}
 
 {% block footer %}
     <div class="bg-white px-4 py-8 sm:px-6 lg:px-8">

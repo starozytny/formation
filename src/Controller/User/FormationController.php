@@ -18,6 +18,7 @@ class FormationController extends AbstractController
             'data' => $foFormationRepository->findBy(['isOnline' => true], ['startAt' => 'ASC'])
         ]);
     }
+
     #[Route('/formation/{slug}', name: 'read')]
     public function read(FoFormation $obj): Response
     {

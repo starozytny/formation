@@ -1,0 +1,50 @@
+{% extends 'user/pages/profil/template.html.twig' %}
+
+{% set page_title %}Mon compte{% endset %}
+{% set page_subtitle %}
+    Renseignez vos informations pour pouvoir vous inscrire à nos formations.
+{% endset %}
+
+{% block main_content %}
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div class="bg-white rounded-md shadow">
+            <div class="py-6 px-4 text-center">
+                <div class="pb-4">
+                    <div class="font-bold text-xl pb-2">{{ elem.lastname }} {{ elem.firstname }}</div>
+
+                    <div class="pb-2">
+                        <div class="uppercase text-gray-600">Informations de contact</div>
+                        <div>{{ elem.email }}</div>
+                    </div>
+                </div>
+                <div class="border-t py-4">
+                    <div>
+                        <div class="uppercase text-gray-600">Identifiant</div>
+                        <div>{{ elem.userIdentifier }}</div>
+                    </div>
+                    <div>
+                        <div class="uppercase text-gray-600">Mot de passe</div>
+                        <div><a href="" class="text-blue-600">Modifier mon mot de passe</a></div>
+                    </div>
+                </div>
+                <div class="border-t pt-4">
+                    <a href="" class="inline-block rounded-md bg-yellow-400 font-semibold py-2 px-4 text-center uppercase transition-colors hover:bg-yellow-300">
+                        Modifier mes informations
+                    </a>
+                </div>
+            </div>
+        </div>
+{#        <div>#}
+{#            <div class="bg-white rounded-md shadow">#}
+{#                <div class="py-6 px-4">WIP</div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div>#}
+{#            <div class="bg-white rounded-md shadow">#}
+{#                <div class="py-6 px-4">#}
+{#                    WIP#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+    </div>
+{% endblock %}
