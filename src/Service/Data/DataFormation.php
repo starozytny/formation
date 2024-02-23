@@ -31,6 +31,7 @@ class DataFormation
 
         return ($obj)
             ->setName($this->sanitizeData->trimData($data->name))
+            ->setSlug($this->sanitizeData->fullSanitize($data->name))
             ->setPriceHt((float) $data->priceHt)
             ->setTva((float) $data->tva)
             ->setNbMin((int) $data->nbMin)

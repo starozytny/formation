@@ -115,6 +115,9 @@ class FoFormation
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -418,5 +421,17 @@ class FoFormation
     {
         $values = ["présentiel", "en ligne"];
         return $values[$this->type];
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }

@@ -1,0 +1,83 @@
+{% extends 'user/pages/formations/template.html.twig' %}
+
+{% set page_title %}{{ elem.name }}{% endset %}
+
+{% block main_content %}
+    <div class="grid gap-4 sm:grid-cols-3">
+        <div class="sm:col-span-2">
+            <div class="rounded-md shadow bg-slate-50 p-4">
+                <h2 class="text-2xl">Description</h2>
+                <p class="text-sm text-gray-600">
+                    100 % des formations sont en lien avec les activités LOI HOGUET,
+                    elles sont proposées en fonction des actualités juridiques
+                    et de la demande de nos adhérents.
+                </p>
+
+                <div class="pt-2">
+                    {{ elem.content | raw }}
+                </div>
+            </div>
+
+        </div>
+        <div class="rounded-md shadow bg-slate-50">
+            <div class="p-4">
+                <a href="" class="block w-auto rounded-md bg-yellow-500 font-semibold p-4 text-center uppercase transition-colors hover:bg-yellow-400">
+                    S'inscrire
+                </a>
+            </div>
+            <div class="p-4 border-t">
+                <div class="text-center text-lg font-bold text-blue-600">{{ elem.priceHt | price }} € HT</div>
+                <div class="text-center">{{ elem.priceHt * (elem.tva / 100) + elem.priceHt | price }} € TTC</div>
+            </div>
+            <div class="p-4 border-t">
+                <div class="flex flex-row align-center">
+                    <span class="icon-calendar translate-y-0.5"></span>
+                    <div class="ml-2">{{ elem.startAt | date('d/m/y') }}</div>
+                </div>
+                <div class="flex flex-row align-center">
+                    <span class="icon-time translate-y-0.5"></span>
+                    <div class="ml-2">
+                        {% if elem.startTimeAm %}
+                            {{ elem.startTimeAm | date('H\\hi') }} - {{ elem.endTimeAm | date('H\\hi') }}
+
+                            {% if elem.startTimePm %}
+                                à
+                            {% endif %}
+                        {% endif %}
+
+                        {% if elem.startTimePm %}
+                            {{ elem.startTimePm | date('H\\hi') }} - {{ elem.endTimePm | date('H\\hi') }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 border-t">
+                <div class="flex flex-row align-center">
+                    <span class="icon-placeholder translate-y-1"></span>
+                    <div class="ml-2">
+                        <div>{{ elem.address }} </div>
+                        <div>{{ elem.address2 }}</div>
+                        <div>{{ elem.complement }}</div>
+                        <div>{{ elem.zipcode }} {{ elem.city }}</div>
+                    </div>
+                </div>
+                <div class="flex flex-row align-center">
+                    <span class="icon-group translate-y-1"></span>
+                    <div class="ml-2">
+                        <div>{{ elem.nbMax }} places max</div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 border-t">
+                <div class="flex flex-row gap-4 align-center">
+                    <div>Type de formation </div>
+                    <div>
+                        <span class="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-sm font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                            {{ elem.typeString | capitalize }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
