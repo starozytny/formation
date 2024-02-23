@@ -75,22 +75,22 @@ export class ProfilFormulaire extends Component {
 		return <>
 			<form onSubmit={this.handleSubmit}>
 
-				<div class="grid sm:grid-cols-2">
+				<div className="grid sm:grid-cols-2 gap-8">
 					<div>
-						<div class="font-semibold text-lg">Profil</div>
+						<div className="font-semibold xl:text-lg">Profil</div>
 						<div className="text-gray-600">
 							Ces informations seront utilisées pour les inscriptions et documents.
 						</div>
 					</div>
 					<div>
 						<div className="bg-white rounded-md shadow p-4">
-							<div class="mb-4">
+							<div className="mb-4">
 								<div>
 									<Input valeur={email} identifiant="email" {...params} type="email">E-mail</Input>
 								</div>
 							</div>
 
-							<div class="flex flex-row gap-4">
+							<div className="flex flex-row gap-4">
 								<div className="w-full">
 									<Input valeur={lastname} identifiant="lastname" {...params}>Nom</Input>
 								</div>
@@ -100,9 +100,10 @@ export class ProfilFormulaire extends Component {
 							</div>
 
 							<div className="flex flex-row justify-end gap-1 mt-4 pt-4 border-t">
-								<button className="inline-block rounded-md font-semibold py-2 px-4 text-center transition-colors hover:bg-gray-100">
+								<a href={Routing.generate(URL_INDEX_ELEMENT)}
+								   className="inline-block rounded-md font-semibold py-2 px-4 text-center transition-colors hover:bg-gray-100">
 									Annuler
-								</button>
+								</a>
 								<button type="submit" className="inline-block rounded-md bg-blue-600 font-semibold py-2 px-4 text-center text-slate-50 transition-colors hover:bg-blue-500">
 									Mettre à jour
 								</button>

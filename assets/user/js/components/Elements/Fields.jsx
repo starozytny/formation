@@ -10,7 +10,7 @@ export function Input (props) {
 		<div className="relative rounded-md shadow-sm">
 			<input type={type} name={identifiant} id={identifiant} value={valeur}
 				   placeholder={placeholder} onChange={onChange} autoComplete={autocomplete}
-				   className="block w-full rounded-md border-0 py-2 pl-3 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-500 sm:text-sm sm:leading-6" />
+				   className="block w-full rounded-md border-0 py-2 pl-3 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-500 xl:text-sm sm:leading-6" />
 		</div>
 	</>
 
@@ -30,7 +30,7 @@ export function Structure ({ identifiant, content, errors, label, noErrors = fal
 		})
 	}
 	return <>
-		<label htmlFor={identifiant} className="block text-sm font-medium leading-6 text-gray-900">
+		<label htmlFor={identifiant} className="block mb-1 xl:text-sm font-medium leading-6 text-gray-900">
 			{label}
 		</label>
 		{content}
