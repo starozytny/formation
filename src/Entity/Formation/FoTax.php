@@ -11,6 +11,7 @@ class FoTax
 {
     const LIST = ['tax_list'];
     const FORM = ['tax_form'];
+    const SELECT = ['tax_select'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -23,7 +24,7 @@ class FoTax
     private ?int $code = null;
 
     #[ORM\Column]
-    #[Groups(['tax_list', 'tax_form'])]
+    #[Groups(['tax_list', 'tax_form', 'tax_select'])]
     private ?float $taux = null;
 
     #[ORM\Column(length: 255, nullable: true)]

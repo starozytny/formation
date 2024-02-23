@@ -4,7 +4,7 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import axios from "axios";
 
-import { Input, InputCity, InputView, Radiobox } from "@commonComponents/Elements/Fields";
+import { Input, InputCity, InputView, Radiobox, Select } from "@commonComponents/Elements/Fields";
 import { TinyMCE } from "@commonComponents/Elements/TinyMCE";
 import { Button } from "@commonComponents/Elements/Button";
 
@@ -20,7 +20,7 @@ const TEXT_UPDATE = "Enregistrer les modifications";
 
 let saveZipcodes = [];
 
-export function FormationFormulaire ({ context, element }) {
+export function FormationFormulaire ({ context, element, taxs }) {
 	let url = Routing.generate(URL_CREATE_ELEMENT);
 
 	if (context === "update") {
@@ -30,6 +30,9 @@ export function FormationFormulaire ({ context, element }) {
 	let form = <Form
 		context={context}
 		url={url}
+
+		taxs={taxs}
+
 		name={element ? Formulaire.setValue(element.name) : ""}
 		priceHt={element ? Formulaire.setValue(element.priceHt) : ""}
 		tva={element ? Formulaire.setValue(element.tva) : ""}
@@ -59,6 +62,11 @@ export function FormationFormulaire ({ context, element }) {
 FormationFormulaire.propTypes = {
 	context: PropTypes.string.isRequired,
 	element: PropTypes.object,
+	taxs: PropTypes.array,
+}
+
+function calculTtc (priceHt, tva) {
+	return priceHt * (tva / 100) + priceHt;
 }
 
 class Form extends Component {
@@ -69,10 +77,13 @@ class Form extends Component {
 		let target = props.target ? props.target : "";
 		let requis = props.requis ? props.requis : "";
 
+		let priceHt = props.priceHt ? parseFloat(props.priceHt) : null;
+
 		this.state = {
 			name: props.name,
 			priceHt: props.priceHt,
 			tva: props.tva,
+			priceTtc: priceHt ? calculTtc(priceHt, parseFloat(props.tva)) : "0",
 			nbMin: props.nbMin,
 			nbMax: props.nbMax,
 			nbRemain: props.nbRemain,
@@ -120,7 +131,17 @@ class Form extends Component {
 		}
 
 		if(name === "priceHt" || name === "tva"){
+			let priceTtc = 0;
 			value = Inputs.textMoneyMinusInput(value, this.state[name]);
+
+			let priceHt = name === "priceHt" ? value : this.state.priceHt;
+			let tva = name === "tva" ? value : this.state.tva;
+
+			if(priceHt !== "" && tva !== ""){
+				priceTtc = calculTtc(parseFloat(priceHt), parseFloat(tva));
+			}
+
+			this.setState({ priceTtc: priceTtc })
 		}
 
 		if(name === "startTimeAm" || name === "endTimeAm" || name === "startTimeAP" || name === "endTimeAP"){
@@ -206,9 +227,9 @@ class Form extends Component {
 	}
 
 	render () {
-		const { context } = this.props;
+		const { context, taxs } = this.props;
 		const {
-			errors, name, priceHt, tva, nbMin, nbMax, nbRemain,
+			errors, name, priceHt, tva, priceTtc, nbMin, nbMax, nbRemain,
 			startAt, endAt, startTimeAm, endTimeAm, startTimePm, endTimePm,
 			address, address2, complement, zipcode, city, cities, openCities,
 			type, content, target, requis
@@ -218,6 +239,11 @@ class Form extends Component {
 			{ value: 0, identifiant: 'type-0', label: 'Présentiel' },
 			{ value: 1, identifiant: 'type-1', label: 'En ligne' },
 		]
+
+		let taxItems = [];
+		taxs.forEach(t => {
+			taxItems.push({ value: t.taux, identifiant: 'tax-' + t.taux, label: t.taux + "%" })
+		})
 
 		let paramsInput0 = { errors: errors, onChange: this.handleChange }
 		let paramsInput1 = { errors: errors, onUpdateData: this.handleChangeTinyMCE }
@@ -278,8 +304,10 @@ class Form extends Component {
 						<div className="line-col-2">
 							<div className="line line-3">
 								<Input identifiant="priceHt" valeur={priceHt} {...paramsInput0}>Prix HT</Input>
-								<Input identifiant="tva" valeur={tva} {...paramsInput0}>Tva</Input>
-								<InputView identifiant="priceTtc" valeur={0} {...paramsInput0}>Prix TTC</InputView>
+								<Select items={taxItems} identifiant="tva" valeur={tva} {...paramsInput0}>
+									TVA
+								</Select>
+								<InputView identifiant="priceTtc" valeur={priceTtc} {...paramsInput0}>Prix TTC</InputView>
 							</div>
 						</div>
 					</div>

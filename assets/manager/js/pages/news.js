@@ -7,7 +7,7 @@ import { NewsFormulaire } from "@managerPages/News/NewsForm";
 
 let el = document.getElementById("news_list");
 if(el){
-	createRoot(el).render(<News />)
+	createRoot(el).render(<News {...el.dataset} />)
 }
 
 el = document.getElementById("news_update");

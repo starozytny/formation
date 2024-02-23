@@ -27,7 +27,7 @@ export class Taxs extends Component {
         this.state = {
             perPage: perPage,
             currentPage: 0,
-            sorter: Sort.compareCode,
+            sorter: Sort.compareTaux,
             loadingData: true,
             element: null,
         }
