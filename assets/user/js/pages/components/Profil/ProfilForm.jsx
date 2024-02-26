@@ -83,7 +83,7 @@ export class ProfilFormulaire extends Component {
 						</div>
 					</div>
 					<div>
-						<div className="bg-white rounded-md shadow p-4">
+						<div className="bg-white rounded-md shadow p-6 xl:p-4">
 							<div className="mb-4">
 								<div>
 									<Input valeur={email} identifiant="email" {...params} type="email">E-mail</Input>
@@ -99,7 +99,7 @@ export class ProfilFormulaire extends Component {
 								</div>
 							</div>
 
-							<div className="flex flex-row justify-end gap-1 mt-4 pt-4 border-t">
+							<div className="flex flex-row justify-end gap-2 mt-4 pt-4 border-t">
 								<a href={Routing.generate(URL_INDEX_ELEMENT)}
 								   className="inline-block rounded-md font-semibold py-2 px-4 text-center transition-colors hover:bg-gray-100">
 									Annuler
