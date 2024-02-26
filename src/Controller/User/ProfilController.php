@@ -6,9 +6,11 @@ use App\Entity\Main\User;
 use App\Repository\Main\UserRepository;
 use App\Service\ApiResponse;
 use App\Service\SanitizeData;
+use App\Service\ValidatorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -28,7 +30,8 @@ class ProfilController extends AbstractController
     #[Route('/modifier', name: 'update', options: ['expose' => true], methods: ['GET', 'PUT'])]
     public function update(Request $request, UserRepository $repository,
                            SerializerInterface $serializer, ApiResponse $apiResponse,
-                           SanitizeData $sanitizeData): Response
+                           SanitizeData $sanitizeData, ValidatorService $validator,
+                           UserPasswordHasherInterface $passwordHasher): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -41,6 +44,15 @@ class ProfilController extends AbstractController
                 ->setFirstname($sanitizeData->trimData($data->firstname))
                 ->setLastname($sanitizeData->trimData($data->lastname))
             ;
+
+            if($data->password != ""){
+                $user->setPassword($passwordHasher->hashPassword($user, $data->password));
+            }
+
+            $noErrors = $validator->validate($user);
+            if ($noErrors !== true) {
+                return $apiResponse->apiJsonResponseValidationFailed($noErrors);
+            }
 
             $repository->save($user, true);
             return $apiResponse->apiJsonResponseSuccessful("Paramètres mis à jours");

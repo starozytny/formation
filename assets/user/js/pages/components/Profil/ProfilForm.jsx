@@ -56,7 +56,6 @@ export class ProfilFormulaire extends Component {
 			];
 		}
 
-		// validate global
 		let validate = Validateur.validateur(paramsToValidate)
 		if (!validate.code) {
 			Formulaire.showErrors(this, validate);
