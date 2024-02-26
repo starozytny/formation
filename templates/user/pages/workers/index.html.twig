@@ -7,7 +7,7 @@
 
 {% set page_actions %}
     <a href="{{ path('user_workers_create') }}"
-       class="inline-block rounded-md bg-blue-600 font-semibold py-2 px-4 text-center text-slate-50 transition-colors hover:bg-blue-500"
+       class="inline-flex justify-center text-center rounded-md bg-blue-600 py-2 px-4 text-sm font-semibold text-slate-50 shadow-sm ring-1 ring-inset ring-blue-600 hover:bg-blue-500"
     >
         <span class="icon-add inline-block translate-y-0.5"></span>
         <span class="ml-1">Ajouter un membre</span>
@@ -46,17 +46,19 @@
                         <tr>
                             <td class="py-2">{{ elem.lastname }} {{ elem.firstname }}</td>
                             <td class="py-2">{{ elem.email }}</td>
-                            <td class="py-2 flex justify-end gap-1">
+                            <td class="py-2 flex justify-end gap-2">
                                 <a href="{{ path('user_workers_update', {id: elem.id}) }}"
-                                   class="relative p-2 flex items-center rounded transition-colors hover:bg-gray-100"
+                                   class="relative inline-flex justify-center rounded-md bg-white text-lg px-2 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                 >
-                                    <span class="icon-pencil text-xl text-gray-600"></span>
+                                    <span class="icon-pencil text-gray-600"></span>
                                     <span class="tooltip bg-gray-300 py-1 px-2 rounded absolute -top-7 right-0 text-xs hidden">
                                         Modifier
                                     </span>
                                 </a>
-                                <a href="" class="relative p-2 flex items-center rounded transition-colors hover:bg-gray-100">
-                                    <span class="icon-trash text-xl text-gray-600"></span>
+                                <a href="{{ path('user_workers_update', {id: elem.id}) }}"
+                                   class="relative inline-flex justify-center rounded-md bg-white text-lg px-2 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                >
+                                    <span class="icon-trash text-gray-600"></span>
                                     <span class="tooltip bg-gray-300 py-1 px-2 rounded absolute -top-7 right-0 text-xs hidden">
                                         Supprimer
                                     </span>
