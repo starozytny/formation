@@ -8,6 +8,8 @@ import Formulaire from "@commonFunctions/formulaire";
 import Validateur from "@commonFunctions/validateur";
 
 import { Input } from "@userComponents/Elements/Fields";
+import { ButtonACancel, ButtonSubmit } from "@userComponents/Elements/Button";
+import { AlertBlue } from "@userComponents/Elements/Alert";
 
 const URL_INDEX_ELEMENT = "user_profil_index";
 const URL_UPDATE_ELEMENT = "user_profil_update";
@@ -22,6 +24,8 @@ export class ProfilFormulaire extends Component {
 			email: element ? Formulaire.setValue(element.email) : "",
 			lastname: element ? Formulaire.setValue(element.lastname) : "",
 			firstname: element ? Formulaire.setValue(element.firstname) : "",
+			password: "",
+			password2: "",
 			errors: [],
 		}
 	}
@@ -36,7 +40,7 @@ export class ProfilFormulaire extends Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
 
-		const { email, lastname, firstname } = this.state;
+		const { email, lastname, firstname, password, password2 } = this.state;
 
 		this.setState({ errors: [] });
 
@@ -45,6 +49,12 @@ export class ProfilFormulaire extends Component {
 			{ type: "text", id: 'lastname', value: lastname },
 			{ type: "text", id: 'firstname', value: firstname },
 		];
+
+		if (password !== "") {
+			paramsToValidate = [...paramsToValidate,
+				...[{ type: "password", id: 'password', value: password, idCheck: 'password2', valueCheck: password2 }]
+			];
+		}
 
 		// validate global
 		let validate = Validateur.validateur(paramsToValidate)
@@ -68,7 +78,7 @@ export class ProfilFormulaire extends Component {
 	}
 
 	render () {
-		const { errors, email, lastname, firstname } = this.state;
+		const { errors, email, lastname, firstname, password, password2 } = this.state;
 
 		let params = { errors: errors, onChange: this.handleChange }
 
@@ -90,7 +100,7 @@ export class ProfilFormulaire extends Component {
 								</div>
 							</div>
 
-							<div className="flex flex-row gap-4">
+							<div className="flex flex-row gap-4 mb-4">
 								<div className="w-full">
 									<Input valeur={lastname} identifiant="lastname" {...params}>Nom</Input>
 								</div>
@@ -99,14 +109,24 @@ export class ProfilFormulaire extends Component {
 								</div>
 							</div>
 
+							<div className="mb-4">
+								<AlertBlue icon="question" title="Information">
+									Laissez les champs de mots de passe vide pour ne pas modifier le mot de passe.
+								</AlertBlue>
+							</div>
+
+							<div className="flex flex-row gap-4">
+								<div className="w-full">
+									<Input type="password" valeur={password} identifiant="password" {...params}>Mot de passe</Input>
+								</div>
+								<div className="w-full">
+									<Input type="password" valeur={password2} identifiant="password2" {...params}>Confirmer le mot de passe</Input>
+								</div>
+							</div>
+
 							<div className="flex flex-row justify-end gap-2 mt-4 pt-4 border-t">
-								<a href={Routing.generate(URL_INDEX_ELEMENT)}
-								   className="inline-block rounded-md font-semibold py-2 px-4 text-center transition-colors hover:bg-gray-100">
-									Annuler
-								</a>
-								<button type="submit" className="inline-block rounded-md bg-blue-600 font-semibold py-2 px-4 text-center text-slate-50 transition-colors hover:bg-blue-500">
-									Mettre à jour
-								</button>
+								<ButtonACancel link={Routing.generate(URL_INDEX_ELEMENT)} />
+								<ButtonSubmit>Mettre à jour</ButtonSubmit>
 							</div>
 						</div>
 					</div>
