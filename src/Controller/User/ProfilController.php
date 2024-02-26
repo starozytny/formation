@@ -5,6 +5,7 @@ namespace App\Controller\User;
 use App\Entity\Main\User;
 use App\Repository\Main\UserRepository;
 use App\Service\ApiResponse;
+use App\Service\SanitizeData;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,13 +27,20 @@ class ProfilController extends AbstractController
 
     #[Route('/modifier', name: 'update', options: ['expose' => true], methods: ['GET', 'PUT'])]
     public function update(Request $request, UserRepository $repository,
-                           SerializerInterface $serializer, ApiResponse $apiResponse): Response
+                           SerializerInterface $serializer, ApiResponse $apiResponse,
+                           SanitizeData $sanitizeData): Response
     {
         /** @var User $user */
         $user = $this->getUser();
 
-        if($request->isMethod('POST')){
+        if($request->isMethod('PUT')){
             $data = json_decode($request->getContent());
+
+            $user = ($user)
+                ->setEmail($sanitizeData->trimData($data->email))
+                ->setFirstname($sanitizeData->trimData($data->firstname))
+                ->setLastname($sanitizeData->trimData($data->lastname))
+            ;
 
             $repository->save($user, true);
             return $apiResponse->apiJsonResponseSuccessful("Paramètres mis à jours");

@@ -6,6 +6,8 @@
 @import "vars/vars";
 @import "vars/variables";
 
+@import "components/loader";
+
 body {
   @include fontRegular();
 }
