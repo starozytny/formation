@@ -32,6 +32,15 @@ b, strong{
   }
 }
 
+a:hover{
+  .tooltip{
+    display: block;
+  }
+}
+
+input:disabled{
+  cursor: not-allowed;
+}
 
 $data:
         "alpha"   var(--alpha),

@@ -22,9 +22,7 @@ class ProfilController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
-        return $this->render('user/pages/profil/index.html.twig', [
-            'elem' => $user
-        ]);
+        return $this->render('user/pages/profil/index.html.twig', ['elem' => $user]);
     }
 
     #[Route('/modifier', name: 'update', options: ['expose' => true], methods: ['GET', 'PUT'])]

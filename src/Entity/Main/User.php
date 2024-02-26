@@ -3,6 +3,7 @@
 namespace App\Entity\Main;
 
 use App\Entity\DataEntity;
+use App\Entity\Formation\FoWorker;
 use App\Repository\Main\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -97,6 +98,9 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Mail::class)]
     private Collection $mails;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: FoWorker::class)]
+    private Collection $foWorkers;
+
     /**
      * @throws Exception
      */
@@ -105,6 +109,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
         $this->createdAt = new \DateTimeImmutable();
         $this->token = $this->initToken();
         $this->mails = new ArrayCollection();
+        $this->foWorkers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -402,6 +407,36 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
             // set the owning side to null (unless already changed)
             if ($mail->getUser() === $this) {
                 $mail->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FoWorker>
+     */
+    public function getFoWorkers(): Collection
+    {
+        return $this->foWorkers;
+    }
+
+    public function addFoWorker(FoWorker $foWorker): static
+    {
+        if (!$this->foWorkers->contains($foWorker)) {
+            $this->foWorkers->add($foWorker);
+            $foWorker->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFoWorker(FoWorker $foWorker): static
+    {
+        if ($this->foWorkers->removeElement($foWorker)) {
+            // set the owning side to null (unless already changed)
+            if ($foWorker->getUser() === $this) {
+                $foWorker->setUser(null);
             }
         }
 

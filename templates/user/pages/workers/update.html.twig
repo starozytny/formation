@@ -1,0 +1,21 @@
+{% extends 'user/pages/workers/template.html.twig' %}
+
+{% set page_title %}Modifier {{ elem.lastname }}{% endset %}
+{% set page_subtitle %}
+    Modifier les informations de {{ elem.lastname }} {{ elem.firstname }}.
+{% endset %}
+
+{% set page_actions %}
+    <a href="{{ path('user_workers_index') }}"
+       class="inline-block rounded-md bg-gray-100 font-semibold py-2 px-4 text-center transition-colors hover:bg-gray-200"
+    >
+        <span class="icon-left-arrow inline-block translate-y-0.5"></span>
+        <span class="ml-1">Retourner à la liste</span>
+    </a>
+{% endset %}
+
+{% block main_content %}
+    <div id="worker_update" class="w-full mx-auto max-w-3xl mt-4" data-obj="{{ obj }}">
+        {% include "layout/components/user/loaders/loader.html.twig" %}
+    </div>
+{% endblock %}

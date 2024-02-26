@@ -5,6 +5,7 @@ namespace App\Service\Data;
 use App\Entity\Formation\FoFormation;
 use App\Entity\Formation\FoNews;
 use App\Entity\Formation\FoTax;
+use App\Entity\Formation\FoWorker;
 use App\Service\SanitizeData;
 
 class DataFormation
@@ -61,6 +62,21 @@ class DataFormation
             ->setCode((int) $data->code)
             ->setTaux((float) $data->taux)
             ->setNumeroCompta($this->sanitizeData->trimData($data->numeroCompta))
+        ;
+    }
+
+    public function setDataWorker(FoWorker $obj, $data, $context): FoWorker
+    {
+        if($context == "create"){
+            $obj = ($obj)
+                ->setLastname($this->sanitizeData->trimData($data->lastname))
+                ->setFirstname($this->sanitizeData->trimData($data->firstname))
+                ->setType((int) $data->type)
+            ;
+        }
+
+        return ($obj)
+            ->setEmail($this->sanitizeData->trimData($data->email))
         ;
     }
 }
