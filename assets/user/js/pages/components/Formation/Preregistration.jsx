@@ -62,21 +62,25 @@ function Step1 ({ data, participants, onClick })
 			</p>
 		</div>
 		<div className="mt-6">
-			<div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+			<div className="grid gap-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
 				{data.map(elem => {
 
-					let active = "hover:border-blue-300";
+					let cardActive = "border-white";
+					let survol = "hover:border-blue-300";
 					participants.forEach(p => {
 						if(p.id === elem.id){
-							active = "border-blue-600"
+							cardActive = "border-blue-600";
+							survol = "";
 						}
 					})
 
 					return <div key={elem.id} onClick={() => onClick(elem)}
-								className={`cursor-pointer leading-4 shadow border-2 rounded-md p-2 ${active}`}
+								className={`cursor-pointer leading-4 rounded-md border-2 p-1 ${cardActive}`}
 					>
-						<div className="font-medium">{elem.lastname} {elem.firstnmae}</div>
-						<div className="text-gray-600">{elem.email}</div>
+						<div className={`p-2 shadow border rounded ${survol}`}>
+							<div className="font-medium">{elem.lastname} {elem.firstnmae}</div>
+							<div className="text-gray-600">{elem.email}</div>
+						</div>
 					</div>
 				})}
 			</div>
