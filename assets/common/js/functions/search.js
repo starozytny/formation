@@ -25,6 +25,13 @@ function searchContainsWith (value, search){
 
 function switchFunction(type, search, v) {
     switch (type) {
+        case "worker":
+            if(searchContainsWith(v.firstname, search)
+                || searchContainsWith(v.lastname, search)
+            ){
+                return v;
+            }
+            break;
         case "user":
             if(searchContainsWith(v.username, search)
                 || searchStartWith(v.email, search)

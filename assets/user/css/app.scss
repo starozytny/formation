@@ -7,6 +7,8 @@
 @import "vars/variables";
 
 @import "components/loader";
+@import "components/list";
+@import "components/pagination";
 
 body {
   @include fontRegular();
@@ -32,7 +34,7 @@ b, strong{
   }
 }
 
-a:hover{
+a:hover, button:hover{
   .tooltip{
     display: block;
   }

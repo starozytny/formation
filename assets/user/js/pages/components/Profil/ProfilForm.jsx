@@ -9,7 +9,7 @@ import Validateur from "@commonFunctions/validateur";
 
 import { Input } from "@userComponents/Elements/Fields";
 import { ButtonACancel, ButtonSubmit } from "@userComponents/Elements/Button";
-import { AlertBlue } from "@userComponents/Elements/Alert";
+import { Alert } from "@userComponents/Elements/Alert";
 
 const URL_INDEX_ELEMENT = "user_profil_index";
 const URL_UPDATE_ELEMENT = "user_profil_update";
@@ -109,9 +109,9 @@ export class ProfilFormulaire extends Component {
 							</div>
 
 							<div className="mb-4">
-								<AlertBlue icon="question" title="Information">
+								<Alert icon="question" color="blue" title="Information">
 									Laissez les champs de mots de passe vide pour ne pas modifier le mot de passe.
-								</AlertBlue>
+								</Alert>
 							</div>
 
 							<div className="flex flex-row gap-4">

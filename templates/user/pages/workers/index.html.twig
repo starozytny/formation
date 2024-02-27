@@ -6,12 +6,12 @@
 {% endset %}
 
 {% set page_actions %}
-    <a href="{{ path('user_workers_create') }}"
-       class="inline-flex justify-center text-center rounded-md bg-blue-600 py-2 px-4 text-sm font-semibold text-slate-50 shadow-sm ring-1 ring-inset ring-blue-600 hover:bg-blue-500"
-    >
-        <span class="icon-add inline-block translate-y-0.5"></span>
-        <span class="ml-1">Ajouter un membre</span>
-    </a>
+    {% include "user/layout/components/buttons/button_blue.html.twig" with {
+        btn_link: path('user_workers_create'),
+        btn_icon: 'add',
+        btn_text: 'Ajouter un membre'
+    }
+    %}
 {% endset %}
 
 {% block main_content %}
@@ -32,42 +32,8 @@
                 </div>
             </div>
         {% else %}
-            <div class="bg-white rounded-md shadow px-4">
-                <table class="w-full table-auto">
-                    <thead class="text-gray-600 text-left uppercase border-b">
-                    <tr>
-                        <th scope="col" class="pb-2 pt-4">Membre</th>
-                        <th scope="col" class="pb-2 pt-4">Email</th>
-                        <th scope="col" class="pb-2 pt-4"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for elem in data %}
-                        <tr>
-                            <td class="py-2">{{ elem.lastname }} {{ elem.firstname }}</td>
-                            <td class="py-2">{{ elem.email }}</td>
-                            <td class="py-2 flex justify-end gap-2">
-                                <a href="{{ path('user_workers_update', {id: elem.id}) }}"
-                                   class="relative inline-flex justify-center rounded-md bg-white text-lg px-2 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                >
-                                    <span class="icon-pencil text-gray-600"></span>
-                                    <span class="tooltip bg-gray-300 py-1 px-2 rounded absolute -top-7 right-0 text-xs hidden">
-                                        Modifier
-                                    </span>
-                                </a>
-                                <a href="{{ path('user_workers_update', {id: elem.id}) }}"
-                                   class="relative inline-flex justify-center rounded-md bg-white text-lg px-2 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                >
-                                    <span class="icon-trash text-gray-600"></span>
-                                    <span class="tooltip bg-gray-300 py-1 px-2 rounded absolute -top-7 right-0 text-xs hidden">
-                                        Supprimer
-                                    </span>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+            <div id="worker_list">
+                {% include "layout/components/user/loaders/loader.html.twig" %}
             </div>
         {% endif %}
     </div>
