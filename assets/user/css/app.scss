@@ -2,10 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "~toastr";
+
 @import "vars/fonts";
 @import "vars/vars";
 @import "vars/variables";
 
+@import "components/toastr";
 @import "components/loader";
 @import "components/list";
 @import "components/pagination";

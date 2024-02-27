@@ -149,7 +149,10 @@ function Step2 ({ errors, onStep })
 		</div>
 		<div className="mt-6">
 			<div className="grid gap-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-				hellow world
+				<h3 className="text-lg">Formation</h3>
+				<div>
+					<div className="font-medium"></div>
+				</div>
 			</div>
 		</div>
 

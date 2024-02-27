@@ -34,10 +34,15 @@ class FormationController extends AbstractController
     public function preregistration(FoFormation $obj, SerializerInterface $serializer,
                                     FoWorkerRepository $workerRepository): Response
     {
+        if(!$obj->isIsOnline()){
+            $this->addFlash("error", "Préinscription fermée.");
+            return $this->redirectToRoute('user_formations_index');
+        }
         $workers = $workerRepository->findBy([], ['lastname' => 'ASC']);
         return $this->render('user/pages/formations/preregistration.html.twig', [
             'elem' => $obj,
-            'workers' => $serializer->serialize($workers, 'json', ['groups' => FoWorker::SELECT])
+            'formation' => $serializer->serialize($obj, 'json', ['groups' => FoFormation::LIST]),
+            'workers' => $serializer->serialize($workers, 'json', ['groups' => FoWorker::SELECT]),
         ]);
     }
 }

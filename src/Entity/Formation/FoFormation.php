@@ -14,15 +14,16 @@ class FoFormation
 
     const LIST = ['formation_list'];
     const FORM = ['formation_form'];
+    const REGISTRATION = ['formation_register'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['formation_list', 'formation_form'])]
+    #[Groups(['formation_list', 'formation_form', 'formation_register'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['formation_list', 'formation_form'])]
+    #[Groups(['formation_list', 'formation_form', 'formation_register'])]
     private ?string $name = null;
 
     #[ORM\Column]
