@@ -1,3 +1,5 @@
+import "../../css/pages/worker.scss"
+
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { WorkerFormulaire } from "@userPages/Worker/WorkerForm";
