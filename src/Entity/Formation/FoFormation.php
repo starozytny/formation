@@ -31,11 +31,11 @@ class FoFormation
     private ?bool $isOnline = false;
 
     #[ORM\Column]
-    #[Groups(['formation_list', 'formation_form'])]
+    #[Groups(['formation_list', 'formation_form', 'formation_register'])]
     private ?float $priceHt = null;
 
     #[ORM\Column]
-    #[Groups(['formation_list', 'formation_form'])]
+    #[Groups(['formation_list', 'formation_form', 'formation_register'])]
     private ?float $tva = null;
 
     #[ORM\Column]
@@ -51,47 +51,47 @@ class FoFormation
     private ?int $nbRemain = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(['formation_list', 'formation_form'])]
+    #[Groups(['formation_list', 'formation_form', 'formation_register'])]
     private ?\DateTimeInterface $startAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(['formation_list', 'formation_form'])]
+    #[Groups(['formation_list', 'formation_form', 'formation_register'])]
     private ?\DateTimeInterface $endAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['formation_form'])]
+    #[Groups(['formation_form', 'formation_register'])]
     private ?\DateTimeInterface $startTimeAm = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['formation_form'])]
+    #[Groups(['formation_form', 'formation_register'])]
     private ?\DateTimeInterface $endTimeAm = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['formation_form'])]
+    #[Groups(['formation_form', 'formation_register'])]
     private ?\DateTimeInterface $startTimePm = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['formation_form'])]
+    #[Groups(['formation_form', 'formation_register'])]
     private ?\DateTimeInterface $endTimePm = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['formation_form'])]
+    #[Groups(['formation_form', 'formation_register'])]
     private ?string $address = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['formation_form'])]
+    #[Groups(['formation_form', 'formation_register'])]
     private ?string $address2 = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['formation_form'])]
+    #[Groups(['formation_form', 'formation_register'])]
     private ?string $complement = null;
 
     #[ORM\Column(length: 6, nullable: true)]
-    #[Groups(['formation_form'])]
+    #[Groups(['formation_form', 'formation_register'])]
     private ?string $zipcode = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['formation_form'])]
+    #[Groups(['formation_form', 'formation_register'])]
     private ?string $city = null;
 
     #[ORM\Column]
@@ -417,13 +417,6 @@ class FoFormation
         return $this;
     }
 
-    #[Groups(['formation_list'])]
-    public function getTypeString(): string
-    {
-        $values = ["présentiel", "en ligne"];
-        return $values[$this->type];
-    }
-
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -434,5 +427,12 @@ class FoFormation
         $this->slug = $slug;
 
         return $this;
+    }
+
+    #[Groups(['formation_list', 'formation_register'])]
+    public function getTypeString(): string
+    {
+        $values = ["présentiel", "en ligne"];
+        return $values[$this->type];
     }
 }

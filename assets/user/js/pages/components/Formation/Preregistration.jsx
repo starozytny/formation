@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+
+import Sanitaze from '@commonFunctions/sanitaze';
+
 import { Button } from "@userComponents/Elements/Button";
 import { Alert } from "@userComponents/Elements/Alert";
 
-export function Preregistration ({ workers })
+export function Preregistration ({ formation, workers })
 {
 	const [errors, setErrors] = useState([]);
 	const [step, setStep] = useState(1);
@@ -72,12 +75,13 @@ export function Preregistration ({ workers })
 			{step === 1 && <Step1 errors={errors} onStep={handleStep}
 								  data={JSON.parse(workers)} participants={participants}
 								  onClick={handleClickWorker}  />}
-			{step === 2 && <Step2 errors={errors} onStep={handleStep} />}
+			{step === 2 && <Step2 errors={errors} onStep={handleStep}
+								  formation={JSON.parse(formation)} participants={participants} />}
 		</div>
 	</>
 }
 
-function Step1 ({ data, participants, errors, onClick, onStep })
+function Step1 ({ errors, onStep, data, participants, onClick })
 {
 	let error;
 	errors.forEach(err => {
@@ -131,7 +135,7 @@ function Step1 ({ data, participants, errors, onClick, onStep })
 	</div>
 }
 
-function Step2 ({ errors, onStep })
+function Step2 ({ errors, onStep, formation, participants })
 {
 	let error;
 	errors.forEach(err => {
@@ -140,6 +144,11 @@ function Step2 ({ errors, onStep })
 		}
 	})
 
+	let nbP = participants.length;
+	let priceTtc = formation.priceHt * (formation.tva / 100) + formation.priceHt;
+	let total = nbP * priceTtc;
+	total = Math.round((total + Number.EPSILON) * 100) / 100
+
 	return <div className="bg-white rounded-md shadow p-4">
 		<div className="leading-4">
 			<h2 className="text-lg">Récapitulatif</h2>
@@ -147,25 +156,75 @@ function Step2 ({ errors, onStep })
 				Vérifiez vos informations puis validez la préinscription.
 			</p>
 		</div>
-		<div className="mt-6">
-			<div className="grid gap-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-				<h3 className="text-lg">Formation</h3>
+		<div className="mt-6 grid gap-6 sm:grid-cols-3">
+			<div className="sm:col-span-2">
 				<div>
-					<div className="font-medium"></div>
+					<h3 className="font-semibold mb-1 text-gray-700">Formation</h3>
+					<div>
+						<div className="font-medium">{formation.name}</div>
+						<div><span className="text-gray-600">Prix HT</span> : <span className="font-medium">{Sanitaze.toFormatCurrency(formation.priceHt)} / personne</span></div>
+						<div className="mb-2"><span className="text-gray-600">Prix TTC</span> : <span className="font-medium">{Sanitaze.toFormatCurrency(priceTtc)} / personne</span></div>
+						<div><span className="text-gray-600">Type</span> : {formation.typeString}</div>
+						<div><span className="text-gray-600">Début</span> : {Sanitaze.toDateFormat(formation.startAt, 'L')}</div>
+						<div><span className="text-gray-600">Fin</span> : {Sanitaze.toDateFormat(formation.endAt, 'L')}</div>
+						{formation.startTimeAm
+							? <div>
+								<span className="text-gray-600">Horaires du matin</span> : {Sanitaze.toDateFormat(formation.startTimeAm, 'LT', '', true)} à {Sanitaze.toDateFormat(formation.endTimeAm, 'LT', '', true)}
+							</div>
+							: null
+						}
+						{formation.startTimePm
+							? <div>
+								<span className="text-gray-600">Horaires de l'après midi</span> : {Sanitaze.toDateFormat(formation.startTimePm, 'LT', '', true)} à {Sanitaze.toDateFormat(formation.endTimePm, 'LT', '', true)}
+							</div>
+							: null
+						}
+						{formation.address
+							? <div className="mt-2">
+								<span className="text-gray-600">Adresse</span> : {formation.address} {formation.address2} {formation.complement} {formation.zipcode}, {formation.city}
+							</div>
+							: null
+						}
+					</div>
+				</div>
+				<div className="mt-4">
+					<h3 className="font-semibold mb-2 text-gray-700">Participants</h3>
+					<div>
+						<div className="flex flex-col gap-2">
+							{participants.map(el => {
+								return <div key={el.id} className="w-full leading-4 rounded-md p-2 shadow border border-blue-300 flex justify-between max-w-md">
+									<div>
+										<div className="font-medium">{el.lastname} {el.firstnmae}</div>
+										<div className="text-gray-600">{el.email}</div>
+									</div>
+									<div className="text-lg">{Sanitaze.toFormatCurrency(priceTtc)}</div>
+								</div>
+							})}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div className="w-full border-t pt-4 sm:border-t-0 sm:border-l sm:pt-0 sm:pl-4">
+				<div>
+					<h3 className="font-semibold mb-1 text-gray-700">Préinscription</h3>
+					<div>
+						<div>Pour {nbP} participant{nbP > 1 ? 's': ''}</div>
+						<div className="text-lg mt-4">Total : <span className="font-bold text-blue-700">{Sanitaze.toFormatCurrency(total)}</span></div>
+					</div>
 				</div>
 			</div>
 		</div>
 
 		<div className={error ? 'mt-4' : 'hidden'}>
-			<Alert icon="warning" color="red" title="Erreur concernant le nombre de participant.">{error}</Alert>
+		<Alert icon="warning" color="red" title="Erreur concernant le nombre de participant.">{error}</Alert>
 		</div>
 
-		<div className="mt-4 flex flex-row gap-2">
+		<div className="mt-6 flex flex-row gap-2">
 			<Button type="default" width="w-full" iconLeft="left-arrow" onClick={() => onStep(1)}>
 				Précèdent
 			</Button>
 			<Button type="blue" width="w-full" iconRight="right-arrow" onClick={() => onStep(3)}>
-				Suivant
+				Valider ({Sanitaze.toFormatCurrency(total)})
 			</Button>
 		</div>
 	</div>
