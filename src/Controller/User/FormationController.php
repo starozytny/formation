@@ -39,7 +39,7 @@ class FormationController extends AbstractController
             return $this->redirectToRoute('user_formations_index');
         }
 
-        $workers = $workerRepository->findBy([], ['lastname' => 'ASC']);
+        $workers = $workerRepository->findBy(['isTrash' => false], ['lastname' => 'ASC']);
         return $this->render('user/pages/formations/preregistration.html.twig', [
             'elem' => $obj,
             'formation' => $serializer->serialize($obj, 'json', ['groups' => FoFormation::REGISTRATION]),

@@ -19,7 +19,7 @@ class WorkerController extends AbstractController
     #[Route('/list', name: 'list', options: ['expose' => true], methods: 'GET')]
     public function list(FoWorkerRepository $repository, ApiResponse $apiResponse): Response
     {
-        return $apiResponse->apiJsonResponse($repository->findAll(), FoWorker::LIST);
+        return $apiResponse->apiJsonResponse($repository->findBy(['isTrash' => false]), FoWorker::LIST);
     }
 
     public function submitForm($type, FoWorkerRepository $repository, FoWorker $obj, Request $request, ApiResponse $apiResponse,
@@ -62,7 +62,13 @@ class WorkerController extends AbstractController
     #[Route('/delete/{id}', name: 'delete', options: ['expose' => true], methods: 'DELETE')]
     public function delete(FoWorker $obj, FoWorkerRepository $repository, ApiResponse $apiResponse): Response
     {
-        $repository->remove($obj, true);
+        if(count($obj->getParticipants()) > 0){
+            $obj->setIsTrash(true);
+
+            $repository->save($obj, true);
+        }else{
+            $repository->remove($obj, true);
+        }
 
         return $apiResponse->apiJsonResponseSuccessful("ok");
     }

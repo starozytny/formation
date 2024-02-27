@@ -46,6 +46,9 @@ class FoWorker
     #[ORM\OneToMany(mappedBy: 'worker', targetEntity: FoParticipant::class)]
     private Collection $participants;
 
+    #[ORM\Column]
+    private ?bool $isTrash = null;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -142,6 +145,18 @@ class FoWorker
                 $participant->setWorker(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isIsTrash(): ?bool
+    {
+        return $this->isTrash;
+    }
+
+    public function setIsTrash(bool $isTrash): static
+    {
+        $this->isTrash = $isTrash;
 
         return $this;
     }
