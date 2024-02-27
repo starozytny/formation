@@ -38,7 +38,7 @@ export class ModalDelete extends Component {
 
 		return <Modal ref={refModal} identifiant={identifiant} maxWidth={maxWidth} title={title}
 					  content={<p>{children}</p>}
-					  footer={<Button colorBg="red-600" colorBgHover="red-500" colorText="white" ring={false} onClick={this.handleDelete}>
+					  footer={<Button type="red" onClick={this.handleDelete}>
 						  Confirmer la suppression
 					  </Button>}
 		/>

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export function Alert ({ icon = null, title = null, color, children })
 {
@@ -9,10 +10,18 @@ export function Alert ({ icon = null, title = null, color, children })
 		}
 		<div>
 			{title
-				? <div className="font-semibold mb-2 xl:mb-0">Informations</div>
+				? <div className="font-semibold mb-2 xl:mb-0">{title}</div>
 				: null
 			}
 			<div className="leading-8">{children}</div>
 		</div>
 	</div>
+}
+
+
+Alert.propTypes = {
+	icon: PropTypes.string,
+	title: PropTypes.string,
+	color: PropTypes.string,
+	ring: PropTypes.bool,
 }

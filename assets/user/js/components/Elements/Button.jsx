@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export function ButtonACancel ({ link, children = "Annuler" })
 {
@@ -17,11 +18,42 @@ export function ButtonSubmit ({ children })
 	</button>
 }
 
-export function Button ({ colorBg, colorBgHover, colorText, ring, colorRing, children, onClick }) {
+export function Button ({ type, width, children, iconLeft, iconRight, onClick })
+{
+	let colorBg = "white", colorBgHover = "gray-50", colorText = "gray-900", ring = true, colorRing = "gray-300";
+	switch (type){
+		case 'blue':
+			colorBg = "blue-600";
+			colorBgHover = "blue-500";
+			colorText = "slate-50";
+			colorRing = "blue-600";
+			break;
+		case 'red':
+			colorBg = "red-600";
+			colorBgHover = "red-500";
+			colorText = "slate-50";
+			ring = false;
+			break;
+		default:break;
+	}
+
 	return <button type="button" onClick={onClick}
-				   className={`inline-flex justify-center rounded-md bg-${colorBg} py-2 px-4 text-sm font-semibold text-${colorText} shadow-sm ${ring ? `ring-1 ring-inset ring-${colorRing}` : ''} hover:bg-${colorBgHover}`}>
-		{children}
+				   className={`inline-flex justify-center ${width} rounded-md bg-${colorBg} py-2 px-4 text-sm font-semibold text-${colorText} shadow-sm ${ring ? `ring-1 ring-inset ring-${colorRing}` : ''} hover:bg-${colorBgHover}`}>
+		{iconLeft ? <span className={`icon-${iconLeft} inline-block pr-1 translate-y-0.5`}></span> : null}
+		<span>{children}</span>
+		{iconRight ? <span className={`icon-${iconRight} inline-block pl-1 translate-y-0.5`}></span> : null}
 	</button>
+}
+
+Button.propTypes = {
+	type: PropTypes.string,
+	width: PropTypes.string,
+	iconLeft: PropTypes.string,
+	iconRight: PropTypes.string,
+	onClick: PropTypes.oneOfType([
+		PropTypes.node,
+		PropTypes.func,
+	]),
 }
 
 export function ButtonIconA ({ icon, link, children }) {
