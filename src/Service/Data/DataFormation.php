@@ -7,12 +7,18 @@ use App\Entity\Formation\FoNews;
 use App\Entity\Formation\FoTax;
 use App\Entity\Formation\FoWorker;
 use App\Service\SanitizeData;
+use Symfony\Component\String\AbstractUnicodeString;
 
 class DataFormation
 {
     public function __construct(
         private readonly SanitizeData $sanitizeData
     ) {}
+
+    public function setSlug($value): ?AbstractUnicodeString
+    {
+        return $this->sanitizeData->fullSanitize($value);
+    }
 
     public function setDataNews(FoNews $obj, $data): FoNews
     {

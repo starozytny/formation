@@ -33,6 +33,15 @@ class FormationController extends AbstractController
 
         $obj = $dataEntity->setDataFormation($obj, $data);
 
+        $existe = $repository->findOneBy(['slug' => $obj->getSlug()]);
+        if($existe){
+            $i = 0;
+            while ($existe && $existe->getId() != $obj->getId()){
+                $obj->setSlug($dataEntity->setSlug($obj->getName()) . '-' . $i++);
+                $existe = $repository->findOneBy(['slug' => $obj->getSlug()]);
+            }
+        }
+
         if($type === "update"){
             $obj->setUpdatedAt(new \DateTime());
         }
