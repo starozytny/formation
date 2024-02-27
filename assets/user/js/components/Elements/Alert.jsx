@@ -3,7 +3,11 @@ import PropTypes from "prop-types";
 
 export function Alert ({ icon = null, title = null, color, children })
 {
-	return <div className={`flex flex-row gap-4 bg-${color}-50 text-${color}-700 rounded-md p-6 xl:p-4`}>
+	const colorVariants = {
+		red: 'bg-red-50 text-red-700',
+	}
+
+	return <div className={`flex flex-row gap-4 ${colorVariants[color]} rounded-md p-6 xl:p-4`}>
 		{icon
 			? <div><span className="icon-question inline-block align-middle"></span></div>
 			: null

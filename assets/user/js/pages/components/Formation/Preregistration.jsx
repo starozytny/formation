@@ -75,8 +75,9 @@ export function Preregistration ({ formation, workers })
 			{step === 1 && <Step1 errors={errors} onStep={handleStep}
 								  data={JSON.parse(workers)} participants={participants}
 								  onClick={handleClickWorker}  />}
-			{step === 2 && <Step2 errors={errors} onStep={handleStep}
+			{step === 2 && <Step2 onStep={handleStep}
 								  formation={JSON.parse(formation)} participants={participants} />}
+			{step === 3 && <Step3 />}
 		</div>
 	</>
 }
@@ -135,15 +136,8 @@ function Step1 ({ errors, onStep, data, participants, onClick })
 	</div>
 }
 
-function Step2 ({ errors, onStep, formation, participants })
+function Step2 ({ onStep, formation, participants })
 {
-	let error;
-	errors.forEach(err => {
-		if(err.name === "step2"){
-			error = err.message;
-		}
-	})
-
 	let nbP = participants.length;
 	let priceTtc = formation.priceHt * (formation.tva / 100) + formation.priceHt;
 	let total = nbP * priceTtc;
@@ -215,16 +209,24 @@ function Step2 ({ errors, onStep, formation, participants })
 			</div>
 		</div>
 
-		<div className={error ? 'mt-4' : 'hidden'}>
-		<Alert icon="warning" color="red" title="Erreur concernant le nombre de participant.">{error}</Alert>
-		</div>
-
 		<div className="mt-6 flex flex-row gap-2">
 			<Button type="default" width="w-full" iconLeft="left-arrow" onClick={() => onStep(1)}>
 				Précèdent
 			</Button>
 			<Button type="blue" width="w-full" iconRight="right-arrow" onClick={() => onStep(3)}>
 				Valider ({Sanitaze.toFormatCurrency(total)})
+			</Button>
+		</div>
+	</div>
+}
+
+
+function Step3 ({  })
+{
+	return <div className="bg-white rounded-md shadow p-4">
+		<div className="mt-6 flex flex-row gap-2">
+			<Button type="blue" width="w-full" iconRight="right-arrow">
+				Voir mes inscriptions
 			</Button>
 		</div>
 	</div>

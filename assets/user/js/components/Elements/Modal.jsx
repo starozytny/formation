@@ -112,7 +112,7 @@ export class Modal extends Component {
                             ? null
                             : ((footer || showClose)
                                 ? <div className="bg-gray-50 px-4 py-3 flex flex-row justify-end gap-2 sm:px-6">
-                                    {showClose && <Button onClick={this.handleClose}>
+                                    {showClose && <Button type="default" onClick={this.handleClose}>
                                         {closeTxt}
                                     </Button>}
                                     {footer}

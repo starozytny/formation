@@ -20,25 +20,14 @@ export function ButtonSubmit ({ children })
 
 export function Button ({ type, width, children, iconLeft, iconRight, onClick })
 {
-	let colorBg = "white", colorBgHover = "gray-50", colorText = "gray-900", ring = true, colorRing = "gray-300";
-	switch (type){
-		case 'blue':
-			colorBg = "blue-600";
-			colorBgHover = "blue-500";
-			colorText = "slate-50";
-			colorRing = "blue-600";
-			break;
-		case 'red':
-			colorBg = "red-600";
-			colorBgHover = "red-500";
-			colorText = "slate-50";
-			ring = false;
-			break;
-		default:break;
+	const colorVariants = {
+		red: 'bg-red-600 text-slate-50 hover:bg-red-500',
+		blue: 'bg-blue-600 text-slate-50 hover:bg-blue-500 ring-1 ring-inset ring-gray-600',
+		default: 'bg-white text-gray-900 hover:bg-gray-50 ring-1 ring-inset ring-gray-300',
 	}
 
 	return <button type="button" onClick={onClick}
-				   className={`inline-flex justify-center ${width} rounded-md bg-${colorBg} py-2 px-4 text-sm font-semibold text-${colorText} shadow-sm ${ring ? `ring-1 ring-inset ring-${colorRing}` : ''} hover:bg-${colorBgHover}`}>
+				   className={`inline-flex justify-center ${width} rounded-md py-2 px-4 text-sm font-semibold shadow-sm ${colorVariants[type]}`}>
 		{iconLeft ? <span className={`icon-${iconLeft} inline-block pr-1 translate-y-0.5`}></span> : null}
 		<span>{children}</span>
 		{iconRight ? <span className={`icon-${iconRight} inline-block pl-1 translate-y-0.5`}></span> : null}
