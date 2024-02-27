@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
+import axios from "axios";
+
 import Sanitaze from '@commonFunctions/sanitaze';
+import Validateur from "@commonFunctions/validateur";
+import Formulaire from "@commonFunctions/formulaire";
 
 import { Button, ButtonA } from "@userComponents/Elements/Button";
 import { Alert } from "@userComponents/Elements/Alert";
 
 const URL_TEAM_PAGE = "user_workers_index";
+const URL_CREATE_ELEMENT = "intern_api_fo_orders_create";
 
 export function Preregistration ({ formation, workers })
 {
@@ -47,8 +52,34 @@ export function Preregistration ({ formation, workers })
 				setStep(value);
 			}
 		}else if(value === 3){
-			setProgress('full');
-			setStep(value);
+			let paramsToValidate = [
+				{ type: "array", id: 'step2', value: participants },
+			];
+
+			let validate = Validateur.validateur(paramsToValidate)
+			if (!validate.code) {
+				setErrors(validate.errors)
+			} else {
+				Formulaire.loader(true);
+
+				let data = {
+					participants: participants,
+					formationId: JSON.parse(formation).id
+				}
+
+				axios({ method: "POST", url: Routing.generate(URL_CREATE_ELEMENT), data: data })
+					.then(function (response) {
+						setProgress('full');
+						setStep(value);
+					})
+					.catch(function (error) {
+						Formulaire.displayErrors(null, error);
+					})
+					.then(function () {
+						Formulaire.loader(false);
+					})
+				;
+			}
 		}
 	}
 
@@ -78,7 +109,7 @@ export function Preregistration ({ formation, workers })
 			{step === 1 && <Step1 errors={errors} onStep={handleStep}
 								  data={JSON.parse(workers)} participants={participants}
 								  onClick={handleClickWorker}  />}
-			{step === 2 && <Step2 onStep={handleStep}
+			{step === 2 && <Step2 errors={errors} onStep={handleStep}
 								  formation={JSON.parse(formation)} participants={participants} />}
 			{step === 3 && <Step3 />}
 		</div>
@@ -150,7 +181,15 @@ function Step1 ({ errors, onStep, data, participants, onClick })
 	</div>
 }
 
-function Step2 ({ onStep, formation, participants }) {
+function Step2 ({ errors, onStep, formation, participants })
+{
+	let error;
+	errors.forEach(err => {
+		if(err.name === "step2"){
+			error = err.message;
+		}
+	})
+
 	let nbP = participants.length;
 	let priceTtc = formation.priceHt * (formation.tva / 100) + formation.priceHt;
 	let total = nbP * priceTtc;
@@ -215,11 +254,15 @@ function Step2 ({ onStep, formation, participants }) {
 				<div>
 					<h3 className="font-semibold mb-1 text-gray-700">Préinscription</h3>
 					<div>
-						<div>Pour {nbP} participant{nbP > 1 ? 's': ''}</div>
+						<div>Pour {nbP} participant{nbP > 1 ? 's' : ''}</div>
 						<div className="text-lg mt-4">Total : <span className="font-bold text-blue-700">{Sanitaze.toFormatCurrency(total)}</span></div>
 					</div>
 				</div>
 			</div>
+		</div>
+
+		<div className={error ? 'mt-4' : 'hidden'}>
+			<Alert icon="warning" color="red" title="Erreur à la validation.">{error}</Alert>
 		</div>
 
 		<div className="mt-6 flex flex-row gap-2">
@@ -233,9 +276,7 @@ function Step2 ({ onStep, formation, participants }) {
 	</div>
 }
 
-
-function Step3 ({  })
-{
+function Step3 ({}) {
 	return <div className="bg-white rounded-md shadow p-4">
 		<div className="mt-6 flex flex-row gap-2">
 			<Button type="blue" width="w-full" iconRight="right-arrow">
