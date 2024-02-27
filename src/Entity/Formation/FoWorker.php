@@ -5,6 +5,8 @@ namespace App\Entity\Formation;
 use App\Entity\Enum\Formation\WorkerType;
 use App\Entity\Main\User;
 use App\Repository\Formation\FoWorkerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -40,6 +42,14 @@ class FoWorker
     #[ORM\ManyToOne(inversedBy: 'foWorkers')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\OneToMany(mappedBy: 'worker', targetEntity: FoParticipant::class)]
+    private Collection $participants;
+
+    public function __construct()
+    {
+        $this->participants = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -102,6 +112,36 @@ class FoWorker
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FoParticipant>
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
+
+    public function addParticipant(FoParticipant $participant): static
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants->add($participant);
+            $participant->setWorker($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(FoParticipant $participant): static
+    {
+        if ($this->participants->removeElement($participant)) {
+            // set the owning side to null (unless already changed)
+            if ($participant->getWorker() === $this) {
+                $participant->setWorker(null);
+            }
+        }
 
         return $this;
     }

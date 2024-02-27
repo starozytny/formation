@@ -4,6 +4,8 @@ namespace App\Entity\Formation;
 
 use App\Entity\Main\User;
 use App\Repository\Formation\FoOrderRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FoOrderRepository::class)]
@@ -23,10 +25,15 @@ class FoOrder
     private ?User $user = null;
 
     #[ORM\Column]
-    private array $participants = [];
-
-    #[ORM\Column]
     private ?int $status = null;
+
+    #[ORM\OneToMany(mappedBy: 'foOrder', targetEntity: FoParticipant::class)]
+    private Collection $participants;
+
+    public function __construct()
+    {
+        $this->participants = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -57,18 +64,6 @@ class FoOrder
         return $this;
     }
 
-    public function getParticipants(): array
-    {
-        return $this->participants;
-    }
-
-    public function setParticipants(array $participants): static
-    {
-        $this->participants = $participants;
-
-        return $this;
-    }
-
     public function getStatus(): ?int
     {
         return $this->status;
@@ -77,6 +72,36 @@ class FoOrder
     public function setStatus(int $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FoParticipant>
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
+
+    public function addParticipant(FoParticipant $participant): static
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants->add($participant);
+            $participant->setFoOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(FoParticipant $participant): static
+    {
+        if ($this->participants->removeElement($participant)) {
+            // set the owning side to null (unless already changed)
+            if ($participant->getFoOrder() === $this) {
+                $participant->setFoOrder(null);
+            }
+        }
 
         return $this;
     }

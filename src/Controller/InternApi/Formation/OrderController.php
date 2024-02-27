@@ -4,9 +4,12 @@ namespace App\Controller\InternApi\Formation;
 
 use App\Entity\Enum\Formation\OrderStatusType;
 use App\Entity\Formation\FoOrder;
+use App\Entity\Formation\FoParticipant;
 use App\Entity\Main\User;
 use App\Repository\Formation\FoFormationRepository;
 use App\Repository\Formation\FoOrderRepository;
+use App\Repository\Formation\FoParticipantRepository;
+use App\Repository\Formation\FoWorkerRepository;
 use App\Service\ApiResponse;
 use App\Service\ValidatorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,7 +22,8 @@ class OrderController extends AbstractController
 {
     #[Route('/create', name: 'create', options: ['expose' => true], methods: 'POST')]
     public function create(Request $request, ApiResponse $apiResponse, ValidatorService $validator,
-                           FoOrderRepository $repository, FoFormationRepository $formationRepository): Response
+                           FoOrderRepository $repository, FoFormationRepository $formationRepository,
+                           FoWorkerRepository $workerRepository, FoParticipantRepository $participantRepository): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -33,12 +37,26 @@ class OrderController extends AbstractController
             return $apiResponse->apiJsonResponseBadRequest("La formation n'existe pas ou n'est pas en ligne.");
         }
 
+        $workersId = [];
+        foreach($data->participants as $p){
+            $workersId[] = $p->id;
+        }
+        $workers = $workerRepository->findBy(['id' => $workersId]);
+
         $obj = (new FoOrder())
             ->setUser($user)
             ->setFormation($formation)
-            ->setParticipants($data->participants)
             ->setStatus(OrderStatusType::Creation)
         ;
+
+        foreach($workers as $worker){
+            $participant = (new FoParticipant())
+                ->setWorker($worker)
+                ->setFoOrder($obj)
+            ;
+
+            $participantRepository->save($participant);
+        }
 
         $noErrors = $validator->validate($obj);
         if ($noErrors !== true) {
