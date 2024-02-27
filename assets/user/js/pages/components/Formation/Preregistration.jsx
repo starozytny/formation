@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import Sanitaze from '@commonFunctions/sanitaze';
 
-import { Button } from "@userComponents/Elements/Button";
+import { Button, ButtonA } from "@userComponents/Elements/Button";
 import { Alert } from "@userComponents/Elements/Alert";
+
+const URL_TEAM_PAGE = "user_workers_index";
 
 export function Preregistration ({ formation, workers })
 {
@@ -101,43 +104,53 @@ function Step1 ({ errors, onStep, data, participants, onClick })
 		</div>
 		<div className="mt-6">
 			<div className="grid gap-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-				{data.map(elem => {
-
-					let cardActive = "border-white";
-					let survol = "hover:border-blue-300";
-					participants.forEach(p => {
-						if(p.id === elem.id){
-							cardActive = "border-blue-600";
-							survol = "";
-						}
-					})
-
-					return <div key={elem.id} onClick={() => onClick(elem)}
-								className={`cursor-pointer leading-4 rounded-md border-2 p-1 ${cardActive}`}
-					>
-						<div className={`p-2 shadow border rounded ${survol}`}>
-							<div className="font-medium">{elem.lastname} {elem.firstnmae}</div>
-							<div className="text-gray-600">{elem.email}</div>
+				{data.length === 0
+					? <>
+						<p>Rendez-vous dans la rubrique Équipe pour ajouter des potentiels participants à la formation.</p>
+						<div>
+							<ButtonA type="blue" link={Routing.generate(URL_TEAM_PAGE)}>Mon équipe</ButtonA>
 						</div>
-					</div>
-				})}
+					</>
+					: (data.map(elem => {
+
+						let cardActive = "border-white";
+						let survol = "hover:border-blue-300";
+						participants.forEach(p => {
+							if(p.id === elem.id){
+								cardActive = "border-blue-600";
+								survol = "";
+							}
+						})
+
+						return <div key={elem.id} onClick={() => onClick(elem)}
+									className={`cursor-pointer leading-4 rounded-md border-2 p-1 ${cardActive}`}
+						>
+							<div className={`p-2 shadow border rounded ${survol}`}>
+								<div className="font-medium">{elem.lastname} {elem.firstnmae}</div>
+								<div className="text-gray-600">{elem.email}</div>
+							</div>
+						</div>
+					}))}
 			</div>
 		</div>
 
-		<div className={error ? 'mt-4' : 'hidden'}>
-			<Alert icon="warning" color="red" title="Erreur concernant le nombre de participant.">{error}</Alert>
-		</div>
+		{data.length > 0
+			? <>
+				<div className={error ? 'mt-4' : 'hidden'}>
+					<Alert icon="warning" color="red" title="Erreur concernant le nombre de participant.">{error}</Alert>
+				</div>
 
-		<div className="mt-4">
-			<Button type="blue" width="w-full" onClick={() => onStep(2)}>
-				Suivant
-			</Button>
-		</div>
+				<div className="mt-4">
+					<Button type="blue" width="w-full" onClick={() => onStep(2)}>
+						Suivant
+					</Button>
+				</div>
+			</>
+			: null}
 	</div>
 }
 
-function Step2 ({ onStep, formation, participants })
-{
+function Step2 ({ onStep, formation, participants }) {
 	let nbP = participants.length;
 	let priceTtc = formation.priceHt * (formation.tva / 100) + formation.priceHt;
 	let total = nbP * priceTtc;
