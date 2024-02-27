@@ -142,8 +142,8 @@ function Step1 ({ errors, onStep, formation, data, participants, onClick })
 			</p>
 			<div className="mt-4">
 				<Alert color="blue" title="Places restantes">
-					Il reste {formation.nbRemain} place{formation.nbRemain > 1 ? "s" :""}.
-					Attention, ce nombre de places restantes peut varié jusqu'à la validation de la préinscription !
+					Il reste <u>{formation.nbRemain} place{formation.nbRemain > 1 ? "s" :""}</u>.
+					Attention, ce nombre peut varié jusqu'à la validation de la préinscription !
 				</Alert>
 			</div>
 		</div>
