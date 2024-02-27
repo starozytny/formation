@@ -9,7 +9,7 @@ import { WorkersList } from "@userPages/Worker/WorkersList";
 
 import { Search } from "@userComponents/Elements/Search";
 import { ModalDelete } from "@userComponents/Shortcut/Modal";
-import { LoaderElements } from "@commonComponents/Elements/Loader";
+import { LoaderElements } from "@userComponents/Elements/Loader";
 import { Pagination } from "@commonComponents/Elements/Pagination";
 
 const URL_GET_DATA = "intern_api_fo_workers_list";
