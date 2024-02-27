@@ -13,27 +13,28 @@ class FoWorker
 {
     const LIST = ['worker_list'];
     const FORM = ['worker_form'];
+    const SELECT = ['worker_select'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['worker_list', 'worker_form'])]
+    #[Groups(['worker_list', 'worker_form', 'worker_select'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['worker_list', 'worker_form'])]
+    #[Groups(['worker_list', 'worker_form', 'worker_select'])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['worker_list', 'worker_form'])]
+    #[Groups(['worker_list', 'worker_form', 'worker_select'])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['worker_list', 'worker_form'])]
+    #[Groups(['worker_list', 'worker_form', 'worker_select'])]
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Groups(['worker_list', 'worker_form'])]
+    #[Groups(['worker_list', 'worker_form', 'worker_select'])]
     private ?int $type = WorkerType::Employee;
 
     #[ORM\ManyToOne(inversedBy: 'foWorkers')]

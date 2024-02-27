@@ -4,5 +4,5 @@ import { Preregistration } from "@userPages/Formation/Preregistration";
 
 let el = document.getElementById("formations_preregistration");
 if(el){
-	createRoot(el).render(<Preregistration />)
+	createRoot(el).render(<Preregistration {...el.dataset} />)
 }

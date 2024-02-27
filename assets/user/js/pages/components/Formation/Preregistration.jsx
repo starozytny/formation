@@ -1,25 +1,79 @@
-import React from "react";
+import React, { useState } from "react";
 
-export function Preregistration () {
+export function Preregistration ({ workers })
+{
+	const [step, setStep] = useState(1);
+	const [participants, setParticipants] = useState([]);
+
+	let handleClickWorker = (element) => {
+		let find = false;
+		participants.forEach(el => {
+			if(el.id === element.id){
+				find = true;
+			}
+		})
+
+		if(!find){
+			setParticipants([...participants, ...[element]])
+		}else{
+			setParticipants(participants.filter(el => el.id !== element.id))
+		}
+	}
+
+	let progress = '1/12';
+	if(step === 2) progress = '1/2';
+	if(step === 3) progress = 'full';
+
 	return <>
 		<div className="relative bg-white rounded-md shadow p-4 flex flex-col-reverse mx-auto max-w-screen-md sm:flex-col sm:p-6">
 			<div className="relative block w-full h-2 bg-slate-200 rounded-full">
-				<div className="relative block w-20 h-2 bg-blue-500 rounded-full"></div>
+				<div className={`absolute top-0 left-0 block w-${progress} h-2 bg-blue-500 rounded-full`}></div>
 			</div>
 			<div className="w-full flex justify-center gap-4 leading-5 font-medium mb-2 sm:mb-0 sm:mt-3 sm:justify-between">
-				<div className="hidden sm:block">
-					<div className="text-gray-500">Étape 1</div>
+				<div className={`${step === 1 ? "block" : "hidden"} text-center sm:block sm:text-left`}>
+					<div className={`${step >= 1 ? "text-blue-600" : "text-gray-500"}`}>Étape 1</div>
 					<div>Participants</div>
 				</div>
-				<div className="block text-center sm:text-left">
-					<div className="text-blue-600">Étape 2</div>
+				<div className={`${step === 2 ? "block" : "hidden"} text-center sm:block sm:text-left`}>
+					<div className={`${step >= 2 ? "text-blue-600" : "text-gray-500"}`}>Étape 2</div>
 					<div>Récapitulatif</div>
 				</div>
-				<div className="hidden sm:block">
-					<div className="text-gray-500">Étape 3</div>
+				<div className={`${step === 3 ? "block" : "hidden"} text-center sm:block sm:text-left`}>
+					<div className={`${step >= 3 ? "text-blue-600" : "text-gray-500"}`}>Étape 3</div>
 					<div>Préinscription</div>
 				</div>
 			</div>
 		</div>
+
+		<div className="mt-4">
+			<Step1 data={JSON.parse(workers)} participants={participants} onClick={handleClickWorker} />
+		</div>
 	</>
+}
+
+function Step1 ({ data, participants, onClick })
+{
+	return <div className="bg-white rounded-md shadow p-4">
+		<h2 className="text-lg">Sélection des participants</h2>
+		<div className="mt-2">
+			<div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+				{data.map(elem => {
+
+					let active = "hover:border-blue-300";
+					participants.forEach(p => {
+						if(p.id === elem.id){
+							active = "border-blue-600"
+						}
+					})
+
+					return <div key={elem.id} onClick={() => onClick(elem)}
+								className={`cursor-pointer leading-4 shadow border-2 rounded-md p-2 ${active}`}
+					>
+						<div className="font-medium">{elem.lastname} {elem.firstnmae}</div>
+						<div className="text-gray-600">{elem.email}</div>
+					</div>
+				})}
+			</div>
+		</div>
+	</div>
 }

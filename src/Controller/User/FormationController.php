@@ -3,10 +3,13 @@
 namespace App\Controller\User;
 
 use App\Entity\Formation\FoFormation;
+use App\Entity\Formation\FoWorker;
 use App\Repository\Formation\FoFormationRepository;
+use App\Repository\Formation\FoWorkerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/espace-membre/formations', name: 'user_formations_')]
 class FormationController extends AbstractController
@@ -28,10 +31,13 @@ class FormationController extends AbstractController
     }
 
     #[Route('/formation/{slug}/preinscription', name: 'preregistration')]
-    public function preregistration(FoFormation $obj): Response
+    public function preregistration(FoFormation $obj, SerializerInterface $serializer,
+                                    FoWorkerRepository $workerRepository): Response
     {
+        $workers = $workerRepository->findBy([], ['lastname' => 'ASC']);
         return $this->render('user/pages/formations/preregistration.html.twig', [
-            'elem' => $obj
+            'elem' => $obj,
+            'workers' => $serializer->serialize($workers, 'json', ['groups' => FoWorker::SELECT])
         ]);
     }
 }
