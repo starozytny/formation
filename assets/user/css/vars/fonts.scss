@@ -32,6 +32,14 @@
 }
 
 @font-face {
+  font-family: 'barlowregular';
+  src: url('../../fonts/barlow-medium-webfont.woff2') format('woff2'),
+  url('../../fonts/barlow-medium-webfont.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'barlowsemibold';
   src: url('../../fonts/barlow-semibold-webfont.woff2') format('woff2'),
   url('../../fonts/barlow-semibold-webfont.woff') format('woff');

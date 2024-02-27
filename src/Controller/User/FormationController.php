@@ -26,4 +26,12 @@ class FormationController extends AbstractController
             'elem' => $obj
         ]);
     }
+
+    #[Route('/formation/{slug}/preinscription', name: 'preregistration')]
+    public function preregistration(FoFormation $obj): Response
+    {
+        return $this->render('user/pages/formations/preregistration.html.twig', [
+            'elem' => $obj
+        ]);
+    }
 }
