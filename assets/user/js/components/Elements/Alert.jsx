@@ -4,7 +4,9 @@ import PropTypes from "prop-types";
 export function Alert ({ icon = null, title = null, color, children })
 {
 	const colorVariants = {
+		blue: 'bg-blue-50 text-blue-700',
 		red: 'bg-red-50 text-red-700',
+		gray: 'bg-gray-50 text-gray-700',
 	}
 
 	return <div className={`flex flex-row gap-4 ${colorVariants[color]} rounded-md p-6 xl:p-4`}>

@@ -37,6 +37,10 @@ class OrderController extends AbstractController
             return $apiResponse->apiJsonResponseBadRequest("La formation n'existe pas ou n'est pas en ligne.");
         }
 
+        if($formation->getNbRemain() < count($data->participants)){
+            return $apiResponse->apiJsonResponseBadRequest("La formation n'a plus que " . $formation->getNbRemain() . " places disponibles.");
+        }
+
         $workersId = [];
         foreach($data->participants as $p){
             $workersId[] = $p->id;

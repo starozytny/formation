@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import axios from "axios";
+import toastr from "toastr";
 
 import Sanitaze from '@commonFunctions/sanitaze';
 import Validateur from "@commonFunctions/validateur";
@@ -29,7 +30,12 @@ export function Preregistration ({ formation, workers })
 		})
 
 		if(!find){
-			setParticipants([...participants, ...[element]])
+			let nParticipants = [...participants, ...[element]];
+			if(nParticipants.length <= formation.nbRemain){
+				setParticipants(nParticipants)
+			}else{
+				toastr.error("Nombre de places maximum atteint.")
+			}
 		}else{
 			setParticipants(participants.filter(el => el.id !== element.id))
 		}
@@ -64,7 +70,7 @@ export function Preregistration ({ formation, workers })
 
 				let data = {
 					participants: participants,
-					formationId: JSON.parse(formation).id
+					formationId: formation.id
 				}
 
 				axios({ method: "POST", url: Routing.generate(URL_CREATE_ELEMENT), data: data })
@@ -107,16 +113,18 @@ export function Preregistration ({ formation, workers })
 
 		<div className="mt-4">
 			{step === 1 && <Step1 errors={errors} onStep={handleStep}
-								  data={JSON.parse(workers)} participants={participants}
+								  formation={formation} data={workers}
+								  participants={participants}
 								  onClick={handleClickWorker}  />}
 			{step === 2 && <Step2 errors={errors} onStep={handleStep}
-								  formation={JSON.parse(formation)} participants={participants} />}
+								  formation={formation}
+								  participants={participants} />}
 			{step === 3 && <Step3 />}
 		</div>
 	</>
 }
 
-function Step1 ({ errors, onStep, data, participants, onClick })
+function Step1 ({ errors, onStep, formation, data, participants, onClick })
 {
 	let error;
 	errors.forEach(err => {
@@ -132,6 +140,12 @@ function Step1 ({ errors, onStep, data, participants, onClick })
 				Cliquez sur un participant pour le sélectionner.
 				Cliquez sur un participant sélectionné pour le désélectionner.
 			</p>
+			<div className="mt-4">
+				<Alert color="blue" title="Places restantes">
+					Il reste {formation.nbRemain} place{formation.nbRemain > 1 ? "s" :""}.
+					Attention, ce nombre de places restantes peut varié jusqu'à la validation de la préinscription !
+				</Alert>
+			</div>
 		</div>
 		<div className="mt-6">
 			<div className="grid gap-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">

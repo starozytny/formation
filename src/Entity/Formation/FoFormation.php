@@ -49,7 +49,7 @@ class FoFormation
     private ?int $nbMax = null;
 
     #[ORM\Column]
-    #[Groups(['formation_list', 'formation_form'])]
+    #[Groups(['formation_list', 'formation_form', 'formation_register'])]
     private ?int $nbRemain = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

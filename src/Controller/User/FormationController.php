@@ -25,6 +25,11 @@ class FormationController extends AbstractController
     #[Route('/formation/{slug}', name: 'read')]
     public function read(FoFormation $obj): Response
     {
+        if(!$obj->isIsOnline()){
+            $this->addFlash("error", "Préinscription fermée.");
+            return $this->redirectToRoute('user_formations_index');
+        }
+
         return $this->render('user/pages/formations/read.html.twig', [
             'elem' => $obj
         ]);
@@ -34,9 +39,9 @@ class FormationController extends AbstractController
     public function preregistration(FoFormation $obj, SerializerInterface $serializer,
                                     FoWorkerRepository $workerRepository): Response
     {
-        if(!$obj->isIsOnline()){
+        if(!$obj->isIsOnline() || $obj->getNbRemain() <= 0){
             $this->addFlash("error", "Préinscription fermée.");
-            return $this->redirectToRoute('user_formations_index');
+            return $this->redirectToRoute('user_formations_read', ['slug' => $obj->getSlug()]);
         }
 
         $workers = $workerRepository->findBy(['isTrash' => false], ['lastname' => 'ASC']);
