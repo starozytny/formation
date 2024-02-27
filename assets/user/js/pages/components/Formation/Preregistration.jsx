@@ -25,9 +25,9 @@ export function Preregistration ({ workers })
 	if(step === 3) progress = 'full';
 
 	return <>
-		<div className="relative bg-white rounded-md shadow p-4 flex flex-col-reverse mx-auto max-w-screen-md sm:flex-col sm:p-6">
+		<div className="relative bg-white rounded-md shadow p-4 flex flex-col-reverse max-w-screen-md sm:flex-col sm:p-6">
 			<div className="relative block w-full h-2 bg-slate-200 rounded-full">
-				<div className={`absolute top-0 left-0 block w-${progress} h-2 bg-blue-500 rounded-full`}></div>
+				<div className={`absolute top-0 left-0 block w-${progress} h-2 bg-blue-600 rounded-full`}></div>
 			</div>
 			<div className="w-full flex justify-center gap-4 leading-5 font-medium mb-2 sm:mb-0 sm:mt-3 sm:justify-between">
 				<div className={`${step === 1 ? "block" : "hidden"} text-center sm:block sm:text-left`}>
@@ -54,8 +54,14 @@ export function Preregistration ({ workers })
 function Step1 ({ data, participants, onClick })
 {
 	return <div className="bg-white rounded-md shadow p-4">
-		<h2 className="text-lg">Sélection des participants</h2>
-		<div className="mt-2">
+		<div className="leading-4">
+			<h2 className="text-lg">Sélection des participants</h2>
+			<p className="text-gray-600">
+				Cliquez sur un participant pour le sélectionner.
+				Cliquez sur un participant sélectionné pour le désélectionner.
+			</p>
+		</div>
+		<div className="mt-6">
 			<div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
 				{data.map(elem => {
 
