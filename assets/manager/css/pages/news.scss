@@ -1,19 +1,5 @@
 @import "../vars/vars";
 
-@import "components/components";
-
-$data:
-        "0" var(--primaryOpacity4) var(--primary),
-        "1" var(--successOpacity4) var(--success),
-;
-
-@each $name, $bg, $txt in $data {
-  .badge-news-#{$name} {
-    background: $bg;
-    color: $txt;
-  }
-}
-
 .items-news{
   $col2: 180px; $col3: 100px; $colGap: 24px;
   //                      __   _____ __    ___    __

@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-import { Alert } from "@commonComponents/Elements/Alert";
+import { Alert } from "@userComponents/Elements/Alert";
 
 import { NewsItem } from "@managerPages/News/NewsItem";
 
 export function NewsList ({ data, highlight, onDelete }) {
-    return <div className="list">
-        <div className="list-table">
+    return <div className="list my-4">
+        <div className="list-table bg-white rounded-md shadow">
             <div className="items items-news">
-                <div className="item item-header">
+                <div className="item item-header uppercase text-gray-600">
                     <div className="item-content">
                         <div className="item-infos">
                             <div className="col-1">Actualité</div>
@@ -23,7 +23,7 @@ export function NewsList ({ data, highlight, onDelete }) {
                     ? data.map((elem) => {
                         return <NewsItem key={elem.id} elem={elem} highlight={highlight} onDelete={onDelete} />;
                     })
-                    : <Alert>Aucune donnée enregistrée.</Alert>
+                    : <Alert color="gray">Aucune donnée enregistrée.</Alert>
                 }
             </div>
         </div>

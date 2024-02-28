@@ -3,14 +3,17 @@
 {% set page_title %}Actualités{% endset %}
 {% set page_subtitle %}Gestion des actualités.{% endset %}
 
-{% block main_content %}
-    <div class="page-actions">
-        <div class="col-1">
-            <a href="{{ path('manager_news_create') }}" class="btn btn-primary">Créer une actualité</a>
-        </div>
-    </div>
+{% set page_actions %}
+    {% include "user/layout/components/buttons/button_blue.html.twig" with {
+        btn_link: path('manager_news_create'),
+        btn_icon: 'add',
+        btn_text: 'Ajouter une actualité'
+    }
+    %}
+{% endset %}
 
+{% block main_content %}
     <div id="news_list" data-highlight="{{ highlight }}">
-        {% include "layout/components/loader.html.twig" %}
+        {% include "layout/components/manager/loaders/loader.html.twig" %}
     </div>
 {% endblock %}

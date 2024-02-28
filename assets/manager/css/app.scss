@@ -2,16 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "~toastr";
+
 @import "vars/fonts";
 @import "vars/vars";
 @import "vars/variables";
 
+@import "components/toastr";
 @import "components/notification";
 @import "components/loader";
 @import "components/list";
 @import "components/pagination";
-@import "components/toolbar";
-@import "components/modal";
 
 body {
   @include fontRegular();
