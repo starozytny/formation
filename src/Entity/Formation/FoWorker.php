@@ -24,11 +24,11 @@ class FoWorker
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['worker_list', 'worker_form', 'worker_select'])]
+    #[Groups(['worker_list', 'worker_form', 'worker_select', 'participant_list'])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['worker_list', 'worker_form', 'worker_select'])]
+    #[Groups(['worker_list', 'worker_form', 'worker_select', 'participant_list'])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255, nullable: true)]

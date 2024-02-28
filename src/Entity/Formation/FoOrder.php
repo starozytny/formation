@@ -19,10 +19,10 @@ class FoOrder
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['order_list'])]
+    #[Groups(['order_list', 'participant_list'])]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'orders')]
+    #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['order_list'])]
     private ?FoFormation $formation = null;

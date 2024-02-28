@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
+
+import axios from "axios";
 
 import Sort from "@commonFunctions/sort";
 import List from "@commonFunctions/list";
+import Formulaire from "@commonFunctions/formulaire";
 
 import { OrdersList } from "@userPages/Order/OrdersList";
 
@@ -30,8 +32,39 @@ export class Orders extends Component {
 	componentDidMount = () => { this.handleGetData(); }
 
 	handleGetData = () => {
+		const { highlight } = this.props;
 		const { perPage, sorter } = this.state;
-		List.getData(this, Routing.generate(URL_GET_DATA), perPage, sorter, this.props.highlight);
+
+		const self = this;
+		axios({ method: "GET", url: Routing.generate(URL_GET_DATA), data: {} })
+			.then(function (response) {
+
+				let orders = JSON.parse(response.data.orders);
+				let participants = JSON.parse(response.data.participants);
+
+				orders.forEach(order => {
+					let workers = [];
+					participants.forEach(p => {
+						if(p.foOrder.id === order.id){
+							workers.push(p);
+						}
+					})
+
+					order.participants = workers
+				})
+
+				let data = orders;
+				let dataImmuable = orders;
+
+				if(sorter) data.sort(sorter);
+				if(sorter) dataImmuable.sort(sorter);
+
+				let [currentData, currentPage] = List.setCurrentPage(highlight, data, perPage, 'id');
+
+				self.setState({ data: data, dataImmuable: dataImmuable, currentData: currentData, currentPage: currentPage, loadingData: false })
+			})
+			.catch(function (error) { Formulaire.displayErrors(self, error); })
+		;
 	}
 
 	handleUpdateData = (currentData) => { this.setState({ currentData }) }

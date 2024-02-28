@@ -16,14 +16,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/intern/api/fo/orders', name: 'intern_api_fo_orders_')]
 class OrderController extends AbstractController
 {
     #[Route('/list', name: 'list', options: ['expose' => true], methods: 'GET')]
-    public function list(FoOrderRepository $repository, ApiResponse $apiResponse): Response
+    public function list(FoOrderRepository $repository, FoParticipantRepository $participantRepository,
+                         SerializerInterface $serializer, ApiResponse $apiResponse): Response
     {
-        return $apiResponse->apiJsonResponse($repository->findBy(['user' => $this->getUser()]), FoOrder::LIST);
+        $orders = $repository->findBy(['user' => $this->getUser()]);
+        $participants = $participantRepository->findBy(['foOrder' => $orders]);
+
+        $orders = $serializer->serialize($orders, 'json', ['groups' => FoOrder::LIST]);
+        $participants = $serializer->serialize($participants, 'json', ['groups' => FoParticipant::LIST]);
+
+        return $apiResponse->apiJsonResponseCustom([
+            'orders' => $orders,
+            'participants' => $participants
+        ]);
     }
 
     #[Route('/create', name: 'create', options: ['expose' => true], methods: 'POST')]

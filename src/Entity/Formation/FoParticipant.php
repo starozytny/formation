@@ -4,21 +4,27 @@ namespace App\Entity\Formation;
 
 use App\Repository\Formation\FoParticipantRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: FoParticipantRepository::class)]
 class FoParticipant
 {
+    const LIST = ['participant_list'];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['participant_list'])]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'participants')]
+    #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'participants')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['participant_list'])]
     private ?FoOrder $foOrder = null;
 
-    #[ORM\ManyToOne(inversedBy: 'participants')]
+    #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'participants')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['participant_list'])]
     private ?FoWorker $worker = null;
 
     public function getId(): ?int

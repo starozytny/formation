@@ -28,7 +28,14 @@ export function OrdersItem ({ elem, highlight, onDelete })
                     </div>
                 </div>
                 <div className="col-2">
-                    <span className="font-medium text-sm">{Sanitaze.toDateFormat(formation.startAt, 'L')}</span> - {formation.name}
+                    <div>
+                        <span className="font-medium text-sm">{Sanitaze.toDateFormat(formation.startAt, 'L')}</span> - {formation.name}
+                    </div>
+                    <div className="text-gray-600 text-sm">
+                        {elem.participants.map((p, index) => {
+                            return <span key={p.id}>{index !== 0 ? ", " : ""}{p.worker.lastname} {p.worker.firstname}</span>
+                        })}
+                    </div>
                 </div>
                 <div className="col-3">
                     <span className="font-medium">{Sanitaze.toFormatCurrency(formation.priceHt)}</span>
