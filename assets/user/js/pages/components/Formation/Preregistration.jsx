@@ -318,15 +318,39 @@ function Step2 ({ errors, onStep, formation, participants })
 
 function Step3 ({ order })
 {
-	if(!order){
-		return null;
-	}
-
 	return <div className="bg-white rounded-md shadow p-4">
-		<div className="mt-6 flex flex-row gap-2">
-			<ButtonA type="blue" width="w-full" iconRight="right-arrow" link={Routing.generate(URL_ORDERS_PAGE, {'h': order.id})}>
-				Voir mes inscriptions
-			</ButtonA>
+		<div className="leading-4">
+			<h2 className="text-lg">Préinscription</h2>
+			<p className="text-gray-600">
+				Vous allez recevoir un mail de confirmation. Veuillez vérifiez vos spams/courriers indésirables.
+			</p>
 		</div>
+		{order
+			? <>
+				<div className="mt-6">
+					<p className="text-lg text-center bg-green-100 p-4 text-green-800 rounded-md">
+						🥳 Préinscription validé ! Notre équipe se charge de valider votre préinscription dans les plus brefs délais. 🎉
+					</p>
+				</div>
+				<div className="mt-6 flex flex-row gap-2">
+					<ButtonA type="blue" width="w-full" iconRight="right-arrow" link={Routing.generate(URL_ORDERS_PAGE, {'h': order.id})}>
+						Voir mes inscriptions
+					</ButtonA>
+				</div>
+			</>
+			: <>
+				<div className="mt-6">
+					<p className="text-lg text-center bg-red-100 p-4 text-red-700 rounded-md">
+						⚠️ Une erreur est survenue, veuillez recommencer la préinscription. ⚠️
+					</p>
+				</div>
+				<div className="mt-6 flex flex-row gap-2">
+					<Button type="red" width="w-full" onClick={() => location.reload()}>
+						Recommencer
+					</Button>
+				</div>
+			</>
+		}
+
 	</div>
 }
