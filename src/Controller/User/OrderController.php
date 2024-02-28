@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/espace-membre/inscriptions', name: 'user_orders_')]
 class OrderController extends AbstractController
 {
-    #[Route('/', name: 'index')]
+    #[Route('/', name: 'index', options: ['expose' => true])]
     public function index(): Response
     {
         /** @var User $user */

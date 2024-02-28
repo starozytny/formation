@@ -14,12 +14,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: FoOrderRepository::class)]
 class FoOrder
 {
+    const ID = ['order_id'];
     const LIST = ['order_list'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['order_list', 'participant_list'])]
+    #[Groups(['order_id', 'order_list', 'participant_list'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'orders')]

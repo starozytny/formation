@@ -87,6 +87,6 @@ class OrderController extends AbstractController
         }
 
         $repository->save($obj, true);
-        return $apiResponse->apiJsonResponseSuccessful("ok");
+        return $apiResponse->apiJsonResponse($obj, FoOrder::ID);
     }
 }

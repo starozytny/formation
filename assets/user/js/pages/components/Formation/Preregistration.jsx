@@ -12,6 +12,7 @@ import { Button, ButtonA } from "@userComponents/Elements/Button";
 import { Alert } from "@userComponents/Elements/Alert";
 
 const URL_TEAM_PAGE = "user_workers_index";
+const URL_ORDERS_PAGE = "user_orders_index";
 const URL_CREATE_ELEMENT = "intern_api_fo_orders_create";
 
 export function Preregistration ({ formation, workers })
@@ -20,6 +21,7 @@ export function Preregistration ({ formation, workers })
 	const [step, setStep] = useState(1);
 	const [progress, setProgress] = useState('1/12');
 	const [participants, setParticipants] = useState([]);
+	const [order, setOrder] = useState(null);
 
 	let handleClickWorker = (element) => {
 		let find = false;
@@ -77,6 +79,7 @@ export function Preregistration ({ formation, workers })
 					.then(function (response) {
 						setProgress('full');
 						setStep(value);
+						setOrder(response.data)
 					})
 					.catch(function (error) {
 						Formulaire.displayErrors(null, error);
@@ -119,7 +122,7 @@ export function Preregistration ({ formation, workers })
 			{step === 2 && <Step2 errors={errors} onStep={handleStep}
 								  formation={formation}
 								  participants={participants} />}
-			{step === 3 && <Step3 />}
+			{step === 3 && <Step3 order={order} />}
 		</div>
 	</>
 }
@@ -290,12 +293,17 @@ function Step2 ({ errors, onStep, formation, participants })
 	</div>
 }
 
-function Step3 ({}) {
+function Step3 ({ order })
+{
+	if(!order){
+		return null;
+	}
+
 	return <div className="bg-white rounded-md shadow p-4">
 		<div className="mt-6 flex flex-row gap-2">
-			<Button type="blue" width="w-full" iconRight="right-arrow">
+			<ButtonA type="blue" width="w-full" iconRight="right-arrow" link={Routing.generate(URL_ORDERS_PAGE, {'h': order.id})}>
 				Voir mes inscriptions
-			</Button>
+			</ButtonA>
 		</div>
 	</div>
 }
