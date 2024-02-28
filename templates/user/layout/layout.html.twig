@@ -42,11 +42,14 @@
             <div class="grid grid-cols-2 gap-4 sm:col-span-2">
                 <div class="flex flex-col">
                     <div class="font-semibold uppercase">Liens utiles</div>
-                    {% for item in menu %}
-                        <a href="{{ item.path }}" class="block font-medium hover:text-gray-600">
-                            <span>{{ item.name }}</span>
-                        </a>
-                    {% endfor %}
+                    <div class="md:grid md:grid-cols-2">
+                        {% for item in menu %}
+                            <a href="{{ item.path }}" class="block hover:text-gray-600">
+                                <span>{{ item.name }}</span>
+                            </a>
+                        {% endfor %}
+                    </div>
+
                 </div>
                 <div class="flex flex-col text-right">
                     <div class="font-semibold">Website</div>
