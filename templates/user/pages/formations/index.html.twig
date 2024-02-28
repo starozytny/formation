@@ -10,10 +10,11 @@
 {% block main_content %}
     <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {% for elem in data %}
-            <a href="{{ path('user_formations_read', {'slug': elem.slug}) }}" class="bg-slate-50 rounded-md shadow basis-1/2 hover:bg-white">
+            <a href="{{ path('user_formations_read', {'slug': elem.slug}) }}"
+               class="bg-white border border-white rounded-md shadow basis-1/2 hover:border-blue-400">
                 <div class="flex flex-row justify-between px-4 py-2">
                     <div>
-                        <div class="font-semibold text-sm">
+                        <div class="font-medium text-sm">
                             {{ elem.startAt | date('d/m/Y') }}
                         </div>
                         <div class="text-gray-400 text-sm">{{ elem.typeString | capitalize }}</div>
@@ -24,7 +25,7 @@
                     </div>
                 </div>
                 <div class="border-t px-4 py-2">
-                    <div>{{ elem.name }}</div>
+                    <div class="font-medium">{{ elem.name }}</div>
                 </div>
             </a>
         {% endfor %}
