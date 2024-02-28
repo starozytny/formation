@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ page_title }} | {{ page_prefix }} {% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('manager_app') }}
+{% endblock %}
+
+{% block body %}
+    {% include "layout/components/page-loader.html.twig" %}
+
+    <div class="grid lg:min-h-full lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+        <nav class="bg-gray-800 lg:min-h-full">
+            <div>
+                <div class="relative flex flex-row items-center justify-between gap-4 p-4 lg:flex-col">
+                    <a href="{{ path('user_homepage') }}" class="flex flex-shrink-0 items-center">
+                        <img class="h-8 w-auto" src="{{ asset('build/user/images/logo.png') }}" alt="Your Company">
+                    </a>
+                    <div class="flex flex-row items-center gap-4 lg:flex-col-reverse">
+                        <div>
+                            <div id="notifs_list">
+                                {% include "layout/components/admin/loaders/btn-icon.html.twig" with { type: 'outline-default' } %}
+                            </div>
+                        </div>
+                        <div class="relative flex rounded-full text-sm">
+                            {% if app.user.avatarFile %}
+                                <img class="h-8 w-8 rounded-full" src="{{ app.user.avatarFile }}" alt="Avatar utilisateur">
+                            {% else %}
+                                <div class="h-8 w-8 rounded-full bg-gray-500 flex items-center justify-center font-semibold">
+                                    <div>
+                                        {{ app.user.lastname | slice(0, 1) }}{{ app.user.firstname | slice(0,1) }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 lg:hidden hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                id="nav-mobile" aria-controls="mobile-menu" aria-expanded="false">
+                            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                            </svg>
+                            <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="nav-content" class="hidden flex-col justify-between pb-4 h-screen max-h-[88vh] sm:flex-row lg:flex lg:flex-col lg:max-h-full lg:h-[80%]">
+                <div class="bg-gray-800 flex flex-col gap-1 w-full px-4 pt-4">
+                    {% for item in menu %}
+                        <a href="{{ item.path }}"
+                           class="{{- app.request.get('_route') in item.matchRoute ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white" }} rounded-md px-3 py-2 font-medium"
+                           aria-current="page"
+                        >
+                            <span class="icon-{{ item.icon }} inline-block translate-y-0.5"></span>
+                            <span class="ml-1">{{ item.name }}</span>
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="bg-gray-800 flex flex-col gap-1 w-full px-4 pt-4">
+                    {% for item in menu_bottom %}
+                        <a href="{{ item.path }}"
+                           class="{{- app.request.get('_route') in item.matchRoute ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white" }} rounded-md px-3 py-2 font-medium"
+                           aria-current="page"
+                        >
+                            <span class="icon-{{ item.icon }} inline-block translate-y-0.5"></span>
+                            <span class="ml-1">{{ item.name }}</span>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </nav>
+
+        <main class="lg:col-span-3 xl:col-span-4 2xl:col-span-5">
+            <div>
+                {% block main_content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+
+    {% block footer %}{% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('manager_app') }}
+{% endblock %}

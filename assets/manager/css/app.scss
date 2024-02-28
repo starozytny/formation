@@ -6,31 +6,14 @@
 @import "vars/vars";
 @import "vars/variables";
 
-@import "components/layout";
-@import "components/menu";
-@import "components/footer";
-@import "components/page";
-
-@import "components/avatar";
-
-@import "components/elements/alert";
-@import "components/elements/card";
-@import "components/elements/breadcrumb";
-@import "components/elements/button";
-@import "components/elements/dropdown";
-@import "components/elements/tooltip";
 @import "components/notification";
 @import "components/loader";
-@import "components/badge";
 @import "components/list";
 @import "components/pagination";
 @import "components/toolbar";
-@import "components/form";
 @import "components/modal";
 
 body {
-  color: var(--alpha);
-  background-color: var(--color1);
   @include fontRegular();
 }
 
@@ -54,7 +37,6 @@ b, strong{
   }
 }
 
-
 $data:
         "alpha"   var(--alpha),
         "primary" var(--primary),
@@ -67,4 +49,8 @@ $data:
   .txt-#{$name}{
     color: $txt;
   }
+}
+
+.nav-content.active{
+  display: block;
 }

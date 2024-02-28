@@ -6,7 +6,6 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min';
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { Notifications } from "@commonComponents/Elements/Notifications";
-import { Theme } from "@commonComponents/Modules/Theme/Theme";
 
 Routing.setRoutingData(routes);
 
@@ -15,22 +14,36 @@ if(notifs){
     createRoot(notifs).render(<Notifications />)
 }
 
-let theme = document.getElementById("theme_switcher");
-if(theme){
-    createRoot(theme).render(<Theme {...theme.dataset} />)
-}
-
 menu();
 
 function menu() {
-    let btn = document.querySelector('.nav-mobile');
+    let btn = document.querySelector('#nav-mobile');
     if(btn){
+        let body = document.querySelector("body");
         btn.addEventListener('click', function () {
-            let content = document.querySelector('.nav-content');
-            if(content.classList.contains('active')){
-                content.classList.remove('active');
+            let content = document.querySelector('#nav-content');
+            let svgs = document.querySelectorAll('#nav-mobile > svg');
+
+            svgs.forEach(svg => {
+                if(svg.classList.contains('hidden')){
+                    svg.classList.remove('hidden');
+                    svg.classList.add('flex');
+                }else{
+                    svg.classList.remove('flex');
+                    svg.classList.add('hidden');
+                }
+            })
+
+            if(content.classList.contains('hidden')){
+                content.classList.remove('hidden');
+                content.classList.add('flex');
+                content.style.overflow = "auto";
+                body.style.overflow = "hidden";
             }else{
-                content.classList.add('active');
+                content.classList.remove('flex');
+                content.classList.add('hidden');
+                content.style.overflow = "hidden";
+                body.style.overflow = "auto";
             }
         })
     }
