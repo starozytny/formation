@@ -73,6 +73,9 @@
             {% if is_granted('ROLE_ADMIN') %}
                 <a class="footer-link" href="{{ path('admin_homepage') }}">Espace administrateur</a>
             {% endif %}
+            {% if is_granted('ROLE_MANAGER') %}
+                <a class="footer-link" href="{{ path('manager_homepage') }}">Espace manager</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
