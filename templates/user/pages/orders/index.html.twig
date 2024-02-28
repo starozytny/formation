@@ -1,0 +1,12 @@
+{% extends 'user/pages/orders/template.html.twig' %}
+
+{% set page_title %}Mes inscriptions{% endset %}
+{% set page_subtitle %}
+    Visualisez l'état de vos inscriptions.
+{% endset %}
+
+{% block main_content %}
+    <div id="orders_list">
+        {% include "layout/components/user/loaders/loader.html.twig" %}
+    </div>
+{% endblock %}

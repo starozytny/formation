@@ -47,7 +47,7 @@ class FormationController extends AbstractController
         $workers = $workerRepository->findBy(['isTrash' => false], ['lastname' => 'ASC']);
         return $this->render('user/pages/formations/preregistration.html.twig', [
             'elem' => $obj,
-            'formation' => $serializer->serialize($obj, 'json', ['groups' => FoFormation::REGISTRATION]),
+            'formation' => $serializer->serialize($obj, 'json', ['groups' => FoFormation::PREREGISTRATION]),
             'workers' => $serializer->serialize($workers, 'json', ['groups' => FoWorker::SELECT]),
         ]);
     }

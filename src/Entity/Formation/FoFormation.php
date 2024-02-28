@@ -16,16 +16,16 @@ class FoFormation
 
     const LIST = ['formation_list'];
     const FORM = ['formation_form'];
-    const REGISTRATION = ['formation_register'];
+    const PREREGISTRATION = ['formation_preregister'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['formation_list', 'formation_form', 'formation_register'])]
+    #[Groups(['formation_list', 'formation_form', 'formation_preregister', 'order_list'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['formation_list', 'formation_form', 'formation_register'])]
+    #[Groups(['formation_list', 'formation_form', 'formation_preregister', 'order_list'])]
     private ?string $name = null;
 
     #[ORM\Column]
@@ -33,11 +33,11 @@ class FoFormation
     private ?bool $isOnline = false;
 
     #[ORM\Column]
-    #[Groups(['formation_list', 'formation_form', 'formation_register'])]
+    #[Groups(['formation_list', 'formation_form', 'formation_preregister', 'order_list'])]
     private ?float $priceHt = null;
 
     #[ORM\Column]
-    #[Groups(['formation_list', 'formation_form', 'formation_register'])]
+    #[Groups(['formation_list', 'formation_form', 'formation_preregister'])]
     private ?float $tva = null;
 
     #[ORM\Column]
@@ -49,51 +49,51 @@ class FoFormation
     private ?int $nbMax = null;
 
     #[ORM\Column]
-    #[Groups(['formation_list', 'formation_form', 'formation_register'])]
+    #[Groups(['formation_list', 'formation_form', 'formation_preregister'])]
     private ?int $nbRemain = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(['formation_list', 'formation_form', 'formation_register'])]
+    #[Groups(['formation_list', 'formation_form', 'formation_preregister', 'order_list'])]
     private ?\DateTimeInterface $startAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(['formation_list', 'formation_form', 'formation_register'])]
+    #[Groups(['formation_list', 'formation_form', 'formation_preregister'])]
     private ?\DateTimeInterface $endAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['formation_form', 'formation_register'])]
+    #[Groups(['formation_form', 'formation_preregister'])]
     private ?\DateTimeInterface $startTimeAm = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['formation_form', 'formation_register'])]
+    #[Groups(['formation_form', 'formation_preregister'])]
     private ?\DateTimeInterface $endTimeAm = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['formation_form', 'formation_register'])]
+    #[Groups(['formation_form', 'formation_preregister'])]
     private ?\DateTimeInterface $startTimePm = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['formation_form', 'formation_register'])]
+    #[Groups(['formation_form', 'formation_preregister'])]
     private ?\DateTimeInterface $endTimePm = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['formation_form', 'formation_register'])]
+    #[Groups(['formation_form', 'formation_preregister'])]
     private ?string $address = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['formation_form', 'formation_register'])]
+    #[Groups(['formation_form', 'formation_preregister'])]
     private ?string $address2 = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['formation_form', 'formation_register'])]
+    #[Groups(['formation_form', 'formation_preregister'])]
     private ?string $complement = null;
 
     #[ORM\Column(length: 6, nullable: true)]
-    #[Groups(['formation_form', 'formation_register'])]
+    #[Groups(['formation_form', 'formation_preregister'])]
     private ?string $zipcode = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['formation_form', 'formation_register'])]
+    #[Groups(['formation_form', 'formation_preregister'])]
     private ?string $city = null;
 
     #[ORM\Column]
@@ -435,7 +435,7 @@ class FoFormation
         return $this;
     }
 
-    #[Groups(['formation_list', 'formation_register'])]
+    #[Groups(['formation_list', 'formation_preregister'])]
     public function getTypeString(): string
     {
         $values = ["présentiel", "en ligne"];

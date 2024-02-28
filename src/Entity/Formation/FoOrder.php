@@ -2,22 +2,29 @@
 
 namespace App\Entity\Formation;
 
+use App\Entity\Enum\Formation\OrderStatusType;
 use App\Entity\Main\User;
 use App\Repository\Formation\FoOrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: FoOrderRepository::class)]
 class FoOrder
 {
+    const LIST = ['order_list'];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['order_list'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['order_list'])]
     private ?FoFormation $formation = null;
 
     #[ORM\ManyToOne(inversedBy: 'foOrders')]
@@ -25,13 +32,22 @@ class FoOrder
     private ?User $user = null;
 
     #[ORM\Column]
+    #[Groups(['order_list'])]
     private ?int $status = null;
 
     #[ORM\OneToMany(mappedBy: 'foOrder', targetEntity: FoParticipant::class)]
     private Collection $participants;
 
+    #[ORM\Column]
+    #[Groups(['order_list'])]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
+
     public function __construct()
     {
+        $this->createdAt = new \DateTimeImmutable();
         $this->participants = new ArrayCollection();
     }
 
@@ -104,5 +120,37 @@ class FoOrder
         }
 
         return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    #[Groups(['order_list'])]
+    public function getStatusString(): string
+    {
+        return match ($this->status) {
+            OrderStatusType::Creation => 'En attente',
+        };
     }
 }

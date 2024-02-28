@@ -26,6 +26,7 @@ Encore
         '@managerPages': path.resolve(__dirname, './assets/manager/js/pages/components'),
         '@userPages': path.resolve(__dirname, './assets/user/js/pages/components'),
         '@userComponents': path.resolve(__dirname, './assets/user/js/components'),
+        '@userFunctions': path.resolve(__dirname, './assets/user/js/functions'),
         '@nodeModulesFolder': path.resolve(__dirname, './node_modules'),
     })
 
@@ -103,6 +104,7 @@ Encore
     .addEntry('user_profil', './assets/user/js/pages/profil.js')
     .addEntry('user_worker', './assets/user/js/pages/worker.js')
     .addEntry('user_formation', './assets/user/js/pages/formation.js')
+    .addEntry('user_order', './assets/user/js/pages/order.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

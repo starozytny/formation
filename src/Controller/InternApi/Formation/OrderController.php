@@ -20,6 +20,12 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/intern/api/fo/orders', name: 'intern_api_fo_orders_')]
 class OrderController extends AbstractController
 {
+    #[Route('/list', name: 'list', options: ['expose' => true], methods: 'GET')]
+    public function list(FoOrderRepository $repository, ApiResponse $apiResponse): Response
+    {
+        return $apiResponse->apiJsonResponse($repository->findBy(['user' => $this->getUser()]), FoOrder::LIST);
+    }
+
     #[Route('/create', name: 'create', options: ['expose' => true], methods: 'POST')]
     public function create(Request $request, ApiResponse $apiResponse, ValidatorService $validator,
                            FoOrderRepository $repository, FoFormationRepository $formationRepository,
