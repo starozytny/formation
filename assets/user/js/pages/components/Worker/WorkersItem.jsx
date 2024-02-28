@@ -33,7 +33,7 @@ export function WorkersItem ({ elem, highlight, onDelete })
                 </div>
                 <div className="col-3 actions">
                     <ButtonIconA icon="pencil" link={urlUpdate}>Modifier</ButtonIconA>
-                    <ButtonIcon icon="trash" onClick={() => onDelete("delete", elem)}>Supprimer</ButtonIcon>
+                    <ButtonIcon type="default" icon="trash" onClick={() => onDelete("delete", elem)}>Supprimer</ButtonIcon>
                 </div>
             </div>
         </div>

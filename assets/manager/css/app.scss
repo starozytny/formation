@@ -54,3 +54,9 @@ $data:
 .nav-content.active{
   display: block;
 }
+
+a:hover, button:hover{
+  .tooltip{
+    display: block;
+  }
+}

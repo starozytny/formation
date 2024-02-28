@@ -24,6 +24,7 @@ Encore
         '@appFolder': path.resolve(__dirname, './assets/app/js'),
         '@adminPages': path.resolve(__dirname, './assets/admin/js/pages/components'),
         '@managerPages': path.resolve(__dirname, './assets/manager/js/pages/components'),
+        '@managerComponents': path.resolve(__dirname, './assets/manager/js/components'),
         '@userPages': path.resolve(__dirname, './assets/user/js/pages/components'),
         '@userComponents': path.resolve(__dirname, './assets/user/js/components'),
         '@userFunctions': path.resolve(__dirname, './assets/user/js/functions'),

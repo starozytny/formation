@@ -44,7 +44,7 @@ export function OrdersItem ({ elem, highlight, onDelete })
                     <Badge type={Styles.getBadgeType(elem.status)}>{elem.statusString}</Badge>
                 </div>
                 <div className="col-5 actions">
-                    <ButtonIcon icon="trash" onClick={() => onDelete("delete", elem)}>Supprimer</ButtonIcon>
+                    <ButtonIcon type="default" icon="trash" onClick={() => onDelete("delete", elem)}>Supprimer</ButtonIcon>
                 </div>
             </div>
         </div>
