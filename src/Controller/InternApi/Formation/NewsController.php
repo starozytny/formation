@@ -32,7 +32,7 @@ class NewsController extends AbstractController
             return $apiResponse->apiJsonResponseBadRequest('Les données sont vides.');
         }
 
-        $obj = $dataEntity->setDataNews($obj, $data);
+        $obj = $dataEntity->setDataNews($obj, $data, $repository);
 
         if($type === "update"){
             $obj->setUpdatedAt(new \DateTime());

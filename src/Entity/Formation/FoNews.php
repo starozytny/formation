@@ -39,6 +39,9 @@ class FoNews extends DataEntity
     #[Groups(['news_form'])]
     private ?string $content = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     #[ORM\Column]
     #[Groups(['news_list'])]
     private ?\DateTimeImmutable $createdAt = null;
@@ -105,6 +108,18 @@ class FoNews extends DataEntity
         return $this;
     }
 
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
@@ -141,5 +156,4 @@ class FoNews extends DataEntity
     {
         return $this->getFileOrDefault($this->file, self::FOLDER, null);
     }
-
 }

@@ -31,16 +31,7 @@ class FormationController extends AbstractController
             return $apiResponse->apiJsonResponseBadRequest('Les données sont vides.');
         }
 
-        $obj = $dataEntity->setDataFormation($obj, $data);
-
-        $existe = $repository->findOneBy(['slug' => $obj->getSlug()]);
-        if($existe){
-            $i = 0;
-            while ($existe && $existe->getId() != $obj->getId()){
-                $obj->setSlug($dataEntity->setSlug($obj->getName()) . '-' . $i++);
-                $existe = $repository->findOneBy(['slug' => $obj->getSlug()]);
-            }
-        }
+        $obj = $dataEntity->setDataFormation($obj, $data, $repository);
 
         if($type === "update"){
             $obj->setUpdatedAt(new \DateTime());
