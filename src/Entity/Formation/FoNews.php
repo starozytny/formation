@@ -3,6 +3,7 @@
 namespace App\Entity\Formation;
 
 use App\Entity\DataEntity;
+use App\Entity\Enum\Formation\NewsVisibility;
 use App\Repository\Formation\FoNewsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -147,8 +148,10 @@ class FoNews extends DataEntity
     #[Groups(['news_list'])]
     public function getVisibilityString(): ?string
     {
-        $values = ["Tout le monde", "Utilisateurs"];
-        return $values[$this->visibility];
+        return match ($this->visibility) {
+            NewsVisibility::All => 'Tout le monde',
+            NewsVisibility::Users => 'Utilisateurs',
+        };
     }
 
     #[Groups(['news_list', 'news_form'])]

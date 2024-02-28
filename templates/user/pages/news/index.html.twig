@@ -1,0 +1,54 @@
+{% extends 'user/pages/news/template.html.twig' %}
+
+{% set page_title %}Actualités{% endset %}
+{% set page_subtitle %}
+    Retrouvez toutes nos actualités sur cette page.
+{% endset %}
+
+{% set page_actions %}
+    {% if is_granted('ROLE_MANAGER') %}
+        {% include "user/layout/components/buttons/button_blue.html.twig" with {
+            btn_link: path('manager_news_create'),
+            btn_icon: 'add',
+            btn_text: 'Ajouter une actualité'
+        }
+        %}
+    {% endif %}
+{% endset %}
+
+{% block main_content %}
+    <div class="mx-auto">
+        {% if data is empty %}
+            <div class="flex flex-col gap-2 items-center pt-6">
+                <div>
+                    <span class="icon-book-1 inline-block text-5xl text-gray-600"></span>
+                </div>
+                <div class="text-center">
+                    <h2>Aucune actualité pour le moment.</h2>
+                    <p class="text-gray-600 text-sm">
+                        Revenez plus tard pour découvrir nos articles !
+                    </p>
+                </div>
+            </div>
+        {% else %}
+            <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                {% for elem in data %}
+                    <a href=""
+                       class="flex flex-row bg-white rounded-md overflow-hidden shadow basis-1/2 group/item"
+                    >
+                        <div class="h-32 w-48">
+                            <img src="{{ elem.fileFile }}" alt="illustration actualité"
+                                 class="object-cover h-full w-full transition-transform group-hover/item:scale-105">
+                        </div>
+                        <div class="w-full px-4 py-2">
+                            <div class="font-medium">
+                                {{ elem.name }}
+                            </div>
+                            <div class="text-gray-500 text-sm">{{ elem.content | striptags | slice(0, 100) }}...</div>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
