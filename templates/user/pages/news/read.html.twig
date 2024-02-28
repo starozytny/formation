@@ -1,0 +1,26 @@
+{% extends 'user/pages/news/template.html.twig' %}
+
+{% set page_title %}Actualité - {{ elem.name }}{% endset %}
+
+{% block main_content %}
+    <div class="mx-auto max-w-screen-md">
+        <div>
+            <div class="text-blue-600 font-medium">Article</div>
+            <div class="font-bold text-5xl">{{ elem.name }}</div>
+            <div class="mt-2 text-gray-500">
+                {{ elem.updatedAt ? "Dernière mod. " ~ elem.updatedAt | date('d/m/y') : elem.createdAt | date('d/m/y') }}
+            </div>
+        </div>
+
+        <div class="text-gray-800 mt-6">
+            {{ elem.content | raw }}
+        </div>
+
+        <div class="mt-24 text-right">
+            <a href="{{ path('user_news_index') }}" class="w-full text-blue-600">
+                <span class="icon-left-arrow inline-block translate-y-0.5"></span>
+                <span class="ml-1">Retourner à la liste des actualités</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
