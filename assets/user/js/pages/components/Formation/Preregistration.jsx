@@ -329,7 +329,9 @@ function Step3 ({ order })
 			? <>
 				<div className="mt-6">
 					<p className="text-lg text-center bg-green-100 p-4 text-green-800 rounded-md">
-						🥳 Préinscription validé ! Notre équipe se charge de valider votre préinscription dans les plus brefs délais. 🎉
+						🥳 Préinscription validé ! Notre équipe se charge de valider votre
+						préinscription dans les plus brefs délais. Suivez l'évolution de votre
+						préinscription sur votre espace. 🎉
 					</p>
 				</div>
 				<div className="mt-6 flex flex-row gap-2">
