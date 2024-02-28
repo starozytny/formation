@@ -20,7 +20,7 @@ class FoWorker
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['worker_list', 'worker_form', 'worker_select'])]
+    #[Groups(['worker_list', 'worker_form', 'worker_select', 'participant_registered'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]

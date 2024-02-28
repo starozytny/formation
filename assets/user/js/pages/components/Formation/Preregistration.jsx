@@ -15,7 +15,7 @@ const URL_TEAM_PAGE = "user_workers_index";
 const URL_ORDERS_PAGE = "user_orders_index";
 const URL_CREATE_ELEMENT = "intern_api_fo_orders_create";
 
-export function Preregistration ({ formation, workers })
+export function Preregistration ({ formation, workers, registered })
 {
 	const [errors, setErrors] = useState([]);
 	const [step, setStep] = useState(1);
@@ -24,22 +24,34 @@ export function Preregistration ({ formation, workers })
 	const [order, setOrder] = useState(null);
 
 	let handleClickWorker = (element) => {
-		let find = false;
-		participants.forEach(el => {
-			if(el.id === element.id){
-				find = true;
+
+		let alreadyRegistered = false;
+		registered.forEach(r => {
+			if(r.worker.id === element.id){
+				alreadyRegistered = true;
 			}
 		})
 
-		if(!find){
-			let nParticipants = [...participants, ...[element]];
-			if(nParticipants.length <= formation.nbRemain){
-				setParticipants(nParticipants)
+		if(!alreadyRegistered){
+			let find = false;
+			participants.forEach(el => {
+				if(el.id === element.id){
+					find = true;
+				}
+			})
+
+			if(!find){
+				let nParticipants = [...participants, ...[element]];
+				if(nParticipants.length <= formation.nbRemain){
+					setParticipants(nParticipants)
+				}else{
+					toastr.error("Nombre de places maximum atteint.")
+				}
 			}else{
-				toastr.error("Nombre de places maximum atteint.")
+				setParticipants(participants.filter(el => el.id !== element.id))
 			}
 		}else{
-			setParticipants(participants.filter(el => el.id !== element.id))
+			toastr.error("Déjà inscrit.e.")
 		}
 	}
 
@@ -116,7 +128,7 @@ export function Preregistration ({ formation, workers })
 
 		<div className="mt-4">
 			{step === 1 && <Step1 errors={errors} onStep={handleStep}
-								  formation={formation} data={workers}
+								  formation={formation} workers={workers} registered={registered}
 								  participants={participants}
 								  onClick={handleClickWorker}  />}
 			{step === 2 && <Step2 errors={errors} onStep={handleStep}
@@ -127,7 +139,7 @@ export function Preregistration ({ formation, workers })
 	</>
 }
 
-function Step1 ({ errors, onStep, formation, data, participants, onClick })
+function Step1 ({ errors, onStep, formation, workers, registered, participants, onClick })
 {
 	let error;
 	errors.forEach(err => {
@@ -152,14 +164,14 @@ function Step1 ({ errors, onStep, formation, data, participants, onClick })
 		</div>
 		<div className="mt-6">
 			<div className="grid gap-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-				{data.length === 0
+				{workers.length === 0
 					? <>
 						<p>Rendez-vous dans la rubrique Équipe pour ajouter des potentiels participants à la formation.</p>
 						<div>
 							<ButtonA type="blue" link={Routing.generate(URL_TEAM_PAGE)}>Mon équipe</ButtonA>
 						</div>
 					</>
-					: (data.map(elem => {
+					: (workers.map(elem => {
 
 						let cardActive = "border-white";
 						let survol = "hover:border-blue-300";
@@ -170,11 +182,22 @@ function Step1 ({ errors, onStep, formation, data, participants, onClick })
 							}
 						})
 
+						let alreadyRegistered = "";
+						let blocked = "cursor-pointer";
+						registered.forEach(r => {
+							if(r.worker.id === elem.id){
+								alreadyRegistered = <span className="text-red-700 text-xs">(Déjà inscrit.e)</span>
+								blocked = "cursor-not-allowed opacity-80";
+								cardActive = "border-red-300";
+								survol = "";
+							}
+						})
+
 						return <div key={elem.id} onClick={() => onClick(elem)}
-									className={`cursor-pointer leading-4 rounded-md border-2 p-1 ${cardActive}`}
+									className={`${blocked} leading-4 rounded-md border-2 p-1 ${cardActive}`}
 						>
 							<div className={`p-2 shadow border rounded ${survol}`}>
-								<div className="font-medium">{elem.lastname} {elem.firstnmae}</div>
+								<div className="font-medium">{elem.lastname} {elem.firstnmae} {alreadyRegistered}</div>
 								<div className="text-gray-600">{elem.email}</div>
 							</div>
 						</div>
@@ -182,7 +205,7 @@ function Step1 ({ errors, onStep, formation, data, participants, onClick })
 			</div>
 		</div>
 
-		{data.length > 0
+		{workers.length > 0
 			? <>
 				<div className={error ? 'mt-4' : 'hidden'}>
 					<Alert icon="warning" color="red" title="Erreur concernant le nombre de participant.">{error}</Alert>

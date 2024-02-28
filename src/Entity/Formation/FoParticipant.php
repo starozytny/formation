@@ -10,6 +10,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class FoParticipant
 {
     const LIST = ['participant_list'];
+    const REGISTERED = ['participant_registered'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -24,7 +25,7 @@ class FoParticipant
 
     #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'participants')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['participant_list'])]
+    #[Groups(['participant_list', 'participant_registered'])]
     private ?FoWorker $worker = null;
 
     public function getId(): ?int

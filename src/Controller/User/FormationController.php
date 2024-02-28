@@ -3,8 +3,10 @@
 namespace App\Controller\User;
 
 use App\Entity\Formation\FoFormation;
+use App\Entity\Formation\FoParticipant;
 use App\Entity\Formation\FoWorker;
 use App\Repository\Formation\FoFormationRepository;
+use App\Repository\Formation\FoParticipantRepository;
 use App\Repository\Formation\FoWorkerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,7 +39,8 @@ class FormationController extends AbstractController
 
     #[Route('/formation/{slug}/preinscription', name: 'preregistration')]
     public function preregistration(FoFormation $obj, SerializerInterface $serializer,
-                                    FoWorkerRepository $workerRepository): Response
+                                    FoWorkerRepository $workerRepository,
+                                    FoParticipantRepository $participantRepository): Response
     {
         if(!$obj->isIsOnline() || $obj->getNbRemain() <= 0){
             $this->addFlash("error", "Préinscription fermée.");
@@ -45,10 +48,20 @@ class FormationController extends AbstractController
         }
 
         $workers = $workerRepository->findBy(['isTrash' => false], ['lastname' => 'ASC']);
+        $tmpParticipants = $participantRepository->findBy(['worker' => $workers]);
+
+        $participants = [];
+        foreach($tmpParticipants as $participant){
+            if($participant->getFoOrder()->getFormation()->getId() == $obj->getId()){
+                $participants[] = $participant;
+            }
+        }
+
         return $this->render('user/pages/formations/preregistration.html.twig', [
             'elem' => $obj,
             'formation' => $serializer->serialize($obj, 'json', ['groups' => FoFormation::PREREGISTRATION]),
             'workers' => $serializer->serialize($workers, 'json', ['groups' => FoWorker::SELECT]),
+            'participants' => $serializer->serialize($participants, 'json', ['groups' => FoParticipant::REGISTERED]),
         ]);
     }
 }
